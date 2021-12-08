@@ -10,13 +10,7 @@ import java.util.Objects;
 public class UserModel {
 
     Long userId;
-
-    @NotEmpty
-    @Size(min = 2, message = "username should have at least 2 characters ")
     String username;
-
-    @NotEmpty
-    @Size(min= 4, message = "password should have at least 4 characters" )
     String password;
 
     public UserModel() {
