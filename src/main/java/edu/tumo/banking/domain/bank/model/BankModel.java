@@ -1,13 +1,12 @@
 package edu.tumo.banking.domain.bank.model;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class BankModel {
     Long bankID;
     String bankName;
     String address;
+
 
     public BankModel() {
     }
