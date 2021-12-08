@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS user (user_id BIGINT PRIMARY KEY auto_increment, user
     ,user_password VARCHAR(255)NOT NULL UNIQUE);
 
 CREATE TABLE IF  NOT EXISTS bank(bank_id BIGINT PRIMARY KEY auto_increment,bank_name VARCHAR(255) NOT NULL UNIQUE ,
-                                 address VARCHAR(255) NOT NULL UNIQUE);
+                                 address VARCHAR(255) NOT NULL UNIQUE, image BLOB);
 
 CREATE TABLE IF NOT EXISTS employee(
     employee_id BIGINT PRIMARY KEY auto_increment,first_name VARCHAR(255) NOT NULL UNIQUE,
@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS employee(
     address VARCHAR(255) NOT NULL UNIQUE,department VARCHAR(255) NOT NULL UNIQUE,
     employees_status BIT NOT NULL UNIQUE,
     bank_id BIGINT NOT NULL UNIQUE,
+    image BLOB,
     FOREIGN KEY (bank_id) REFERENCES bank(bank_id));
 
 
