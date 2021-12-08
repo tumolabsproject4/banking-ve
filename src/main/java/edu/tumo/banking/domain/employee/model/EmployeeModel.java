@@ -3,6 +3,7 @@ package edu.tumo.banking.domain.employee.model;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class EmployeeModel {
@@ -15,13 +16,12 @@ public class EmployeeModel {
     String department;
     Boolean employeeStatus;
     Long bankId;
+    Byte[] image;
 
     public EmployeeModel() {
     }
 
-    public EmployeeModel(Long employeeId, String firstName, String lastName,
-                         Integer age, Float salary, String address, String department,
-                         Boolean employeeStatus, Long bankId) {
+    public EmployeeModel(Long employeeId, String firstName, String lastName, Integer age, Float salary, String address, String department, Boolean employeeStatus, Long bankId, Byte[] image) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,6 +31,7 @@ public class EmployeeModel {
         this.department = department;
         this.employeeStatus = employeeStatus;
         this.bankId = bankId;
+        this.image = image;
     }
 
     public Long getEmployeeId() {
@@ -105,17 +106,27 @@ public class EmployeeModel {
         this.bankId = bankId;
     }
 
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeModel that = (EmployeeModel) o;
-        return Objects.equals(employeeId, that.employeeId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(salary, that.salary) && Objects.equals(address, that.address) && Objects.equals(department, that.department) && Objects.equals(employeeStatus, that.employeeStatus) && Objects.equals(bankId, that.bankId);
+        return Objects.equals(employeeId, that.employeeId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(salary, that.salary) && Objects.equals(address, that.address) && Objects.equals(department, that.department) && Objects.equals(employeeStatus, that.employeeStatus) && Objects.equals(bankId, that.bankId) && Arrays.equals(image, that.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeId, firstName, lastName, age, salary, address, department, employeeStatus, bankId);
+        int result = Objects.hash(employeeId, firstName, lastName, age, salary, address, department, employeeStatus, bankId);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 
     @Override
@@ -130,6 +141,7 @@ public class EmployeeModel {
                 ", department='" + department + '\'' +
                 ", employeeStatus=" + employeeStatus +
                 ", bankId=" + bankId +
+                ", image=" + Arrays.toString(image) +
                 '}';
     }
 }
