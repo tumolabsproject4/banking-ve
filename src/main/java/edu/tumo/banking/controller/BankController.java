@@ -46,6 +46,11 @@ public class BankController {
         return new ResponseEntity<>(bankService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/image")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id){
+        return new ResponseEntity<>(bankService.getImage(id), HttpStatus.OK);
+    }
+
     @PutMapping
     public ResponseEntity<BankModel> updateBank(@RequestBody BankModel updatedBank) {
 

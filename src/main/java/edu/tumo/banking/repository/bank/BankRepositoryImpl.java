@@ -42,6 +42,12 @@ public class BankRepositoryImpl implements BankRepository<BankModel, Long> {
         Optional<BankModel> bank=findById(id);
         String sql = "UPDATE bank SET image = ? where bank_id = ?";
         byte[] imageBytes = new byte[0];
+        try {
+            imageBytes = image.getBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int update = jdbcTemplate.update(sql, imageBytes,id);
         return null;
     }
 

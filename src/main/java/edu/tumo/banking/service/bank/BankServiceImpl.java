@@ -32,6 +32,12 @@ public class BankServiceImpl implements BankService{
     }
 
     @Override
+    public byte[] getImage(Long id) {
+        Optional<BankModel> bankModel=bankRepository.findById(id);
+        return bankModel.get().getImage();
+    }
+
+    @Override
     public BankModel update(BankModel bank) {
         return (BankModel) bankRepository.update(bank);
     }
