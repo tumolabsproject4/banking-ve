@@ -1,26 +1,22 @@
 package edu.tumo.banking.domain.bank.model;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class BankModel {
     Long bankID;
     String bankName;
     String address;
-
+    Byte[] image;
 
     public BankModel() {
     }
 
-
-    public BankModel(Long bankID, String bankName, String address) {
+    public BankModel(Long bankID, String bankName, String address, Byte[] image) {
         this.bankID = bankID;
         this.bankName = bankName;
         this.address = address;
-    }
-    public BankModel( String bankName, String address) {
-
-        this.bankName = bankName;
-        this.address = address;
+        this.image = image;
     }
 
     public Long getBankID() {
@@ -47,17 +43,27 @@ public class BankModel {
         this.address = address;
     }
 
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BankModel bankModel = (BankModel) o;
-        return Objects.equals(bankID, bankModel.bankID) && Objects.equals(bankName, bankModel.bankName) && Objects.equals(address, bankModel.address);
+        return Objects.equals(bankID, bankModel.bankID) && Objects.equals(bankName, bankModel.bankName) && Objects.equals(address, bankModel.address) && Arrays.equals(image, bankModel.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bankID, bankName, address);
+        int result = Objects.hash(bankID, bankName, address);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 
     @Override
@@ -66,6 +72,7 @@ public class BankModel {
                 "bankID=" + bankID +
                 ", bankName='" + bankName + '\'' +
                 ", address='" + address + '\'' +
+                ", image=" + Arrays.toString(image) +
                 '}';
     }
 }

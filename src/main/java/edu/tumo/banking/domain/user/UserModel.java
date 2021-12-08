@@ -1,10 +1,5 @@
 package edu.tumo.banking.domain.user;
 
-import org.springframework.boot.convert.DataSizeUnit;
-import org.springframework.lang.NonNull;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class UserModel {
