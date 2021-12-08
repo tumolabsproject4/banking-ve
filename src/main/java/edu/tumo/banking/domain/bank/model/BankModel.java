@@ -19,6 +19,16 @@ public class BankModel {
         this.image = image;
     }
 
+    public BankModel(Long bankID, String bankName, String address) {
+        this.bankID = bankID;
+        this.bankName = bankName;
+        this.address = address;
+    }
+    public BankModel( String bankName, String address) {
+        this.bankName = bankName;
+        this.address = address;
+    }
+
     public Long getBankID() {
         return bankID;
     }

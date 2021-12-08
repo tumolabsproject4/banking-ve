@@ -5,7 +5,9 @@ import edu.tumo.banking.repository.mappers.BankRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,14 @@ public class BankRepositoryImpl implements BankRepository<BankModel, Long> {
         if (inserted == 1) {
             return bankModel;
         }
+        return null;
+    }
+
+    @Override
+    public BankModel addImage(Long id, MultipartFile image) {
+        Optional<BankModel> bank=findById(id);
+        String sql = "UPDATE bank SET image = ? where bank_id = ?";
+        byte[] imageBytes = new byte[0];
         return null;
     }
 
@@ -69,5 +79,10 @@ public class BankRepositoryImpl implements BankRepository<BankModel, Long> {
         }else{
             System.out.println("No Bank found with id " + id);
         }
+    }
+
+    @Override
+    public void deleteImageByBankId(Long id) {
+
     }
 }
