@@ -29,8 +29,8 @@ public class BankRepositoryImpl implements BankRepository<BankModel, Long> {
 
     @Override
     public BankModel add(BankModel bankModel) {
-        String sql = "INSERT INTO bankModel('bank_name','address') VALUES(?,?)";
-        int inserted= jdbcTemplate.update(sql, bankModel.getBankID(),bankModel.getBankName(),bankModel.getAddress());
+        String sql = "INSERT INTO bank('bank_name','address') VALUES(?,?)";
+        int inserted= jdbcTemplate.update(sql, bankModel.getBankName(),bankModel.getAddress());
         if (inserted == 1) {
             return bankModel;
         }

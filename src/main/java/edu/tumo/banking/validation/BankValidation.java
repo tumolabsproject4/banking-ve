@@ -26,6 +26,22 @@ public class BankValidation {
         }
         return true;
     }
+    public static boolean validateBankModelforAdd(BankModel bankModel) {
+        if(bankModel==null)
+        {
+            System.out.println(" Bank is null  ");
+            return false;
+        }
+        if (bankModel.getBankName() == null) {
+            System.out.println("Name of bank is null  ");
+            return false;
+        }
+        if (bankModel.getAddress() == null) {
+            System.out.println("Address of bank is null ");
+            return false;
+        }
+        return true;
+    }
 
     public boolean validateForNull(BankModel updatedBank) {
         return false;
