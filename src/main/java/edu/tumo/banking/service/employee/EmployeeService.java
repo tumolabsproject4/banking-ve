@@ -21,7 +21,7 @@ public interface EmployeeService {
 
     Optional<EmployeeModel> findById(Long id);
 
-    Optional<EmployeeModel> update(EmployeeModel employeeModel);
+    EmployeeModel update(EmployeeModel employeeModel);
 
     void deleteEmployeeById(Long id);
 

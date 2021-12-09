@@ -1,39 +1,28 @@
 package edu.tumo.banking.controller;
 
 import edu.tumo.banking.domain.user.UserModel;
-import edu.tumo.banking.validation.UserValidation;
 import edu.tumo.banking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
-    private final UserValidation userValidation;
 
     @Autowired
-    public UserController(UserService userService, UserValidation userValidation) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userValidation = userValidation;
     }
 
     @PostMapping
-    //harcnel logger jdbc
-    public ResponseEntity<UserModel> adduser(@Valid @RequestBody UserModel user) throws IOException, SQLException {
-        if(!(userValidation.validateForUser(user)))
-        {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+
+    public ResponseEntity<UserModel> adduser( @RequestBody UserModel user) {
         return new ResponseEntity<>(userService.add(user), HttpStatus.CREATED);
     }
 
@@ -50,11 +39,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserModel> updateUser(@Valid @RequestBody UserModel updatedUser) throws IOException, SQLException {
-        if(!(userValidation.validateForUser(updatedUser)))
-        {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<UserModel> updateUser(@RequestBody UserModel updatedUser) {
         return new ResponseEntity<>(userService.update(updatedUser), HttpStatus.OK);
     }
 

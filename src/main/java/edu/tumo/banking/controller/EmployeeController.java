@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,27 +17,39 @@ import java.util.Optional;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final EmployeeValidation employeeValidation;
 
     @Autowired
     public EmployeeController(EmployeeService employeeService,EmployeeValidation employeeValidation){
         this.employeeService = employeeService;
-        this.employeeValidation=employeeValidation;
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeModel> addEmployee(@Valid @RequestBody EmployeeModel employee){
-        if(!(employeeValidation.validateForNull(employee)))
-        {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<EmployeeModel> addEmployee(@RequestBody EmployeeModel employee){
         return new ResponseEntity<>(employeeService.add(employee), HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<EmployeeModel> addImage(@PathVariable Long id , @RequestParam("image") MultipartFile image){
+        return new ResponseEntity<>(employeeService.addImage(id,image),HttpStatus.CREATED);
+    }
+
     @GetMapping
-    public ResponseEntity<List<EmployeeModel>> findemployees(){
+    public ResponseEntity<List<EmployeeModel>> findEmployees(){
         List<EmployeeModel> employee = employeeService.findAll();
         return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
+
+    @GetMapping("{id/cast}")
+    public ResponseEntity<List<EmployeeModel>> findStaff(@PathVariable Long id)
+    {
+        List<EmployeeModel> employee =employeeService.findStaffFromBank(id);
+        return new ResponseEntity<>(employee,HttpStatus.OK);
+    }
+    @GetMapping("/{id/department}")
+    public  ResponseEntity<List<EmployeeModel>> findEmployeesDepartment(@PathVariable Long id,@PathVariable String department)
+    {
+        List<EmployeeModel> employee =employeeService.findEmployeesFromDepartment(id,department);
+        return new ResponseEntity<>(employee,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -47,19 +59,13 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public ResponseEntity<EmployeeModel> updateEmployee(@Valid @RequestBody EmployeeModel updatedEmployee){
-        if(!(employeeValidation.validateForNull(updatedEmployee)))
-        {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<EmployeeModel> updateEmployee( @RequestBody EmployeeModel updatedEmployee){
         return new ResponseEntity<>(employeeService.update(updatedEmployee), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEmployeeById(@PathVariable Long id) {
-        employeeService.deleteEmployeeModelById(id);
+        employeeService.deleteEmployeeById(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-
 }
