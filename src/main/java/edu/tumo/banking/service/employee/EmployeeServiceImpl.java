@@ -90,7 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Optional<EmployeeModel> update(EmployeeModel employeeModel) {
+    public EmployeeModel update(EmployeeModel employeeModel) {
         if(!EmployeeValidation.validateEmployeeModel(employeeModel)){
             logger.warn("Employee {} is not valid",employeeModel);
             throw  new ResourceNotValidException("Employee with id " + employeeModel.getEmployeeId() + "is not valid");
@@ -103,7 +103,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         logger.info("Employee is updated",employeeModel);
 
-        return  employeeRepository.update(employeeModel);
+        return (EmployeeModel) employeeRepository.update(employeeModel).get();
     }
 
     @Override
