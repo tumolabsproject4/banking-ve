@@ -1,7 +1,4 @@
 package edu.tumo.banking.service.bank;
 
-
-class BankServiceImplTest {
-
-
+public class UserServiceImplTest {
 }
