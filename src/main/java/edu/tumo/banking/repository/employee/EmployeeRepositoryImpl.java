@@ -80,6 +80,32 @@ public class EmployeeRepositoryImpl implements EmployeeRepository<EmployeeModel,
     }
 
     @Override
+    public List<EmployeeModel> findStaffFromBank(Long id){
+        String sql = "SELECT * FROM employee where bank_id = ?";
+        List<EmployeeModel> staff = null;
+        try{
+            staff = jdbcTemplate.query(sql, new EmployeeRowMapper(), id);
+        }catch (DataAccessException ex){
+            logger.error("Staff is not found from bank{}", id);
+        }
+        logger.info("Staff from bank{} is found ", id);
+        return staff;
+    }
+
+    @Override
+    public List<EmployeeModel> findEmployeesFromDepartment(Long id,String department){
+        String  sql = "SELECT * FROM employee where bank_id =? , department = ?";
+        List<EmployeeModel> employeesSameDepartment = null;
+        try{
+            employeesSameDepartment = jdbcTemplate.query(sql, new EmployeeRowMapper(), id, department);
+        }catch (DataAccessException ex){
+            logger.error("Employees from same department{} are not found from bank{}", department, id);
+        }
+        logger.info("Employees from same department{} are found  from bank{}  ", department, id);
+        return employeesSameDepartment;
+    }
+
+    @Override
     public Optional<EmployeeModel> findById(Long id) {
         String sql = "SELECT * FROM employee WHERE employee_id= ?";
         EmployeeModel employeeModel =null;

@@ -14,6 +14,10 @@ public interface EmployeeRepository<EmployeeModel, Long>{
 
     List<EmployeeModel> findAll();
 
+    List<EmployeeModel> findStaffFromBank(Long id);
+
+    List<EmployeeModel> findEmployeesFromDepartment(Long id,String department);
+
     Optional<EmployeeModel> findById(Long id);
 
     Optional<EmployeeModel> update(EmployeeModel employeeModel);

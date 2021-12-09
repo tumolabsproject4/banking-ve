@@ -1,16 +1,14 @@
 package edu.tumo.banking.service.bank;
 
 import edu.tumo.banking.domain.bank.model.BankModel;
-import edu.tumo.banking.exception.NotFoundValue;
-import edu.tumo.banking.exception.ResourceNotFound;
-import edu.tumo.banking.exception.ResourceNotValid;
+import edu.tumo.banking.exception.NotFoundValueException;
+import edu.tumo.banking.exception.ResourceNotValidException;
 import edu.tumo.banking.repository.bank.BankRepository;
 import edu.tumo.banking.validation.BankValidation;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -66,7 +64,7 @@ class BankServiceImplTest {
     public void add_bank_null()
     {
         Assertions.assertFalse(BankValidation.validateBankModel(null));
-        ResourceNotValid resourceNotValid=Assertions.assertThrows(ResourceNotValid.class,() -> bankService.add(null));
+        ResourceNotValidException resourceNotValid=Assertions.assertThrows(ResourceNotValidException.class,() -> bankService.add(null));
         Assertions.assertEquals(resourceNotValid.getMessage(),"Bank is not valid");
     }
 
@@ -76,7 +74,7 @@ class BankServiceImplTest {
     {
         BankModel emptyBankName=new BankModel("","notEmpty");
         Assertions.assertFalse(BankValidation.validateBankModel(emptyBankName));
-        ResourceNotValid resourceNotValid=Assertions.assertThrows(ResourceNotValid.class,() -> bankService.add(emptyBankName));
+        ResourceNotValidException resourceNotValid=Assertions.assertThrows(ResourceNotValidException.class,() -> bankService.add(emptyBankName));
         Assertions.assertEquals(resourceNotValid.getMessage(),"BankName is not valid");
     }
 
@@ -86,7 +84,7 @@ class BankServiceImplTest {
     {
         BankModel emptyBankAdress=new BankModel("notEmpty","");
         Assertions.assertFalse(BankValidation.validateBankModel(emptyBankAdress));
-        ResourceNotValid resourceNotValid=Assertions.assertThrows(ResourceNotValid.class,() -> bankService.add(emptyBankAdress));
+        ResourceNotValidException resourceNotValid=Assertions.assertThrows(ResourceNotValidException.class,() -> bankService.add(emptyBankAdress));
         Assertions.assertEquals(resourceNotValid.getMessage(),"BankName is not valid");
     }
 
@@ -111,7 +109,7 @@ class BankServiceImplTest {
     public void findById_throw_resourceNotFound()
     {
         when(bankRepository.findById(2L)).thenReturn(Optional.empty());
-        NotFoundValue notFoundValue= Assertions.assertThrows(NotFoundValue.class,()->bankService.findById(2L));
+        NotFoundValueException notFoundValue= Assertions.assertThrows(NotFoundValueException.class,()->bankService.findById(2L));
         Assertions.assertEquals(notFoundValue.getMessage(),"The bank id is not found");
     }
 
@@ -128,7 +126,7 @@ class BankServiceImplTest {
     @DisplayName("update when bank is null")
     public void update_when_bank_is_null() {
         Assertions.assertFalse(BankValidation.validateBankModel(null));
-        ResourceNotValid resourceNotValid = Assertions.assertThrows(ResourceNotValid.class, () -> bankService.update(null));
+        ResourceNotValidException resourceNotValid = Assertions.assertThrows(ResourceNotValidException.class, () -> bankService.update(null));
         Assertions.assertEquals(resourceNotValid.getMessage(), "The bank is not valid");
     }
 
@@ -137,7 +135,7 @@ class BankServiceImplTest {
     public void update_when_bankName_is_empty() {
         BankModel emptyBankModel=new BankModel(1L,"","notEmpty");
         Assertions.assertFalse(BankValidation.validateBankModel(emptyBankModel));
-        ResourceNotValid resourceNotValid=Assertions.assertThrows(ResourceNotValid.class,()->bankService.update(emptyBankModel));
+        ResourceNotValidException resourceNotValid=Assertions.assertThrows(ResourceNotValidException.class,()->bankService.update(emptyBankModel));
         Assertions.assertEquals(resourceNotValid.getMessage(),"The bankName is empty");
     }
 
@@ -146,7 +144,7 @@ class BankServiceImplTest {
     public void update_when_bankAddress_is_empty() {
         BankModel emptyBankAddress=new BankModel(1L,"notEmpty","");
         Assertions.assertFalse(BankValidation.validateBankModel(emptyBankAddress));
-        ResourceNotValid notValid=Assertions.assertThrows(ResourceNotValid.class,()->bankService.update(emptyBankAddress));
+        ResourceNotValidException notValid=Assertions.assertThrows(ResourceNotValidException.class,()->bankService.update(emptyBankAddress));
         Assertions.assertEquals(notValid.getMessage(), " For update the bankAddress is empty");
     }
 
@@ -155,7 +153,7 @@ class BankServiceImplTest {
     public void update_when_bankId_null() {
         BankModel nullId=new BankModel(null ,"notEmpty", "notEmpty");
         Assertions.assertNull(nullId.getBankID());
-        ResourceNotValid notValid=Assertions.assertThrows(ResourceNotValid.class,()-> bankService.update(nullId));
+        ResourceNotValidException notValid=Assertions.assertThrows(ResourceNotValidException.class,()-> bankService.update(nullId));
         Assertions.assertEquals(notValid.getMessage(),"For update the bankId is null");
     }
 
@@ -164,7 +162,7 @@ class BankServiceImplTest {
     public void update_bankId_is_negative() {
         BankModel negativeBankModel=new BankModel(-1L, "notEmpty", "notEmpty");
         Assertions.assertTrue(negativeBankModel.getBankID()<=0);
-        ResourceNotValid notValid=Assertions.assertThrows(ResourceNotValid.class,()->bankService.update(negativeBankModel));
+        ResourceNotValidException notValid=Assertions.assertThrows(ResourceNotValidException.class,()->bankService.update(negativeBankModel));
         Assertions.assertEquals(notValid.getMessage(),"For update bankId is negative");
     }
 
@@ -172,7 +170,7 @@ class BankServiceImplTest {
     @DisplayName("update Throws NotFoundValue")
     public void updateUser_throws_notFoundValue() {
         when(bankRepository.findById(2L)).thenReturn(Optional.empty());
-        NotFoundValue notFound=Assertions.assertThrows(NotFoundValue.class,()-> bankService.deleteBankModelBy(2L));
+        NotFoundValueException notFound=Assertions.assertThrows(NotFoundValueException.class,()-> bankService.deleteBankModelBy(2L));
         Assertions.assertEquals(notFound.getMessage(),"The user id is not found for update ");
     }
 
@@ -180,7 +178,7 @@ class BankServiceImplTest {
     @DisplayName("deleteBankModelById Throws NotFoundException As User Is Not Found")
     public void deleteBankModelById_throws_notFoundValue() {
         when(bankRepository.findById(2L)).thenReturn(Optional.empty());
-        NotFoundValue notFoundValue=Assertions.assertThrows(NotFoundValue.class,()->bankService.deleteBankModelBy(2L));
+        NotFoundValueException notFoundValue=Assertions.assertThrows(NotFoundValueException.class,()->bankService.deleteBankModelBy(2L));
         Assertions.assertEquals(notFoundValue.getMessage(),"The user with id is not found for delete");
     }
 
