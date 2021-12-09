@@ -16,9 +16,9 @@ public interface BankRepository<BankModel, Long>{
     Optional<BankModel> findById(Long id);
 
 
-    BankModel update(BankModel bank);
+    Optional<BankModel> update(BankModel bank);
 
-    void deleteBankModelBy(Long id );
+    void deleteBankModelById(Long id );
 
     void deleteImageByBankId(Long id);
 

@@ -13,12 +13,11 @@ public class EmployeeModel {
     String department;
     Boolean employeeStatus;
     Long bankId;
-    Byte[] image;
+    byte[] image;
 
     public EmployeeModel() {
     }
-
-    public EmployeeModel(Long employeeId, String firstName, String lastName, Integer age, Float salary, String address, String department, Boolean employeeStatus, Long bankId, Byte[] image) {
+    public EmployeeModel(Long employeeId, String firstName, String lastName, Integer age, Float salary, String address, String department, Boolean employeeStatus, Long bankId, byte[] image) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -103,12 +102,13 @@ public class EmployeeModel {
         this.bankId = bankId;
     }
 
-    public Byte[] getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Byte[] image) {
+    public EmployeeModel setImage(byte[] image) {
         this.image = image;
+        return this;
     }
 
     @Override

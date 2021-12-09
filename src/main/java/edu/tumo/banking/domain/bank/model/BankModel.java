@@ -36,22 +36,6 @@ public class BankModel {
     public void setBankID(Long bankID) {
         this.bankID = bankID;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BankModel bankModel = (BankModel) o;
-        return Objects.equals(bankID, bankModel.bankID) && Objects.equals(bankName, bankModel.bankName) && Objects.equals(address, bankModel.address) && Arrays.equals(image, bankModel.image);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(bankID, bankName, address);
-        result = 31 * result + Arrays.hashCode(image);
-        return result;
-    }
-
     public String getBankName() {
         return bankName;
     }
@@ -72,8 +56,24 @@ public class BankModel {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public BankModel setImage(byte[] image) {
         this.image = image;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BankModel bankModel = (BankModel) o;
+        return Objects.equals(bankID, bankModel.bankID) && Objects.equals(bankName, bankModel.bankName) && Objects.equals(address, bankModel.address) && Arrays.equals(image, bankModel.image);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(bankID, bankName, address);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 
     @Override
