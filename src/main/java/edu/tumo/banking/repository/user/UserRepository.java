@@ -5,9 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository<UserModel,Long>{
-    List<UserModel> findAll();
+
     UserModel add(UserModel userModel);
-    UserModel update(UserModel userModel);
+
+    List<UserModel> findAll();
+
     Optional<UserModel> findById(Long id);
+
+    Optional<UserModel> findByUserName(String userName);
+
+    Optional<UserModel> update(UserModel userModel);
+
     void deleteUserById(Long id);
 }

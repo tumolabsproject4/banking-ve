@@ -1,7 +1,7 @@
 package edu.tumo.banking.service.user;
 
 import edu.tumo.banking.domain.user.UserModel;
-import edu.tumo.banking.repository.user.UserRepositoryImp;
+import edu.tumo.banking.repository.user.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class UserServiceImpl  implements UserService{
 
-    private final UserRepositoryImp userRepositoryImp;
+    private final UserRepositoryImpl userRepositoryImp;
 
     @Autowired
-    public UserServiceImpl(UserRepositoryImp userRepositoryImp) {
+    public UserServiceImpl(UserRepositoryImpl userRepositoryImp) {
         this.userRepositoryImp = userRepositoryImp;
     }
 

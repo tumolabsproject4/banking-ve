@@ -28,7 +28,7 @@ public class BankController {
 
     @PostMapping
     public ResponseEntity<BankModel> addBank(@RequestBody BankModel newBank){
-        if(!bankValidation.validateBankModel(newBank))
+        if(!bankValidation.validateBankModelforAdd(newBank))
         {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -44,6 +44,11 @@ public class BankController {
     @GetMapping("/{id}")
     public ResponseEntity<BankModel> findBankById(@PathVariable Long id) {
         return new ResponseEntity<>(bankService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id){
+        return new ResponseEntity<>(bankService.getImage(id), HttpStatus.OK);
     }
 
     @PutMapping

@@ -5,43 +5,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeValidation {
-    public boolean validateForNull(EmployeeModel employeeModel) {
-        if (employeeModel.getEmployeeId() == null) {
-            System.out.println("ID of employee is null  ");
+    public static boolean validateEmployeeModel(EmployeeModel employeeModel) {
+        if (employeeModel != null) {
+            if (employeeModel.getFirstName()!=null && !employeeModel.getFirstName().isEmpty()
+            && employeeModel.getLastName()!=null && !employeeModel.getLastName().isEmpty()
+            && employeeModel.getAge()!=null && employeeModel.getAge()>0
+            && employeeModel.getSalary()!=null && employeeModel.getSalary()>0
+            && employeeModel.getAddress() !=null && !employeeModel.getAddress().isEmpty()
+            && employeeModel.getDepartment() != null && !employeeModel.getDepartment().isEmpty()
+            && employeeModel.getEmployeeStatus() != null && employeeModel.getBankId()!=null
+                    && employeeModel.getBankId()>0) {
+                return true;
+            }
             return false;
         }
-        if (employeeModel.getFirstName() == null) {
-            System.out.println("Firstname of employee is null ");
-            return false;
-        }
-        if (employeeModel.getLastName()==null){
-            System.out.println("Lastname of employee is null ");
-            return false;
-        }
-        if (employeeModel.getAge()==null){
-            System.out.println("Age of employee is null ");
-            return false;
-        }
-        if (employeeModel.getSalary()==null){
-            System.out.println("Salary of employee is null ");
-            return false;
-        }
-        if (employeeModel.getAddress()==null){
-            System.out.println("Address of employee is null ");
-            return false;
-        }
-        if (employeeModel.getDepartment()==null){
-            System.out.println("Department of employee is null ");
-            return false;
-        }
-        if (employeeModel.getEmployeeStatus()==null){
-            System.out.println("EmployeeStatus of employee is null ");
-            return false;
-        }
-        if (employeeModel.getBankId()==null){
-            System.out.println("BankId of employee is null ");
-            return false;
-        }
-        return true;
+        return false;
     }
 }

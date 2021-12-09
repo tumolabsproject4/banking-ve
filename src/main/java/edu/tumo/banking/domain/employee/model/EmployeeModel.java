@@ -1,46 +1,23 @@
 package edu.tumo.banking.domain.employee.model;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class EmployeeModel {
     Long employeeId;
-
-    @NotEmpty
-    @Size(min=2, message= "Firstname should have at least 2 characters")
     String firstName;
-
-    @NotEmpty
-    @Size(min=2, message= "Firstname should have at least 2 characters")
     String lastName;
-
-    @NotEmpty
     Integer age;
-
-    @NotEmpty
     Float salary;
-
-    @NotEmpty
-    @Size(min = 6 , message = "address should have at least 6 characters")
     String address;
-
-    @NotEmpty
-    @Size(min = 2 , message = "department should have at least 2 characters")
     String department;
-
-    @NotEmpty
-    @AssertTrue
     Boolean employeeStatus;
     Long bankId;
+    byte[] image;
 
     public EmployeeModel() {
     }
-
-    public EmployeeModel(Long employeeId, String firstName, String lastName,
-                         Integer age, Float salary, String address, String department,
-                         Boolean employeeStatus, Long bankId) {
+    public EmployeeModel(Long employeeId, String firstName, String lastName, Integer age, Float salary, String address, String department, Boolean employeeStatus, Long bankId, byte[] image) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +27,7 @@ public class EmployeeModel {
         this.department = department;
         this.employeeStatus = employeeStatus;
         this.bankId = bankId;
+        this.image = image;
     }
 
     public Long getEmployeeId() {
@@ -124,17 +102,28 @@ public class EmployeeModel {
         this.bankId = bankId;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public EmployeeModel setImage(byte[] image) {
+        this.image = image;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeModel that = (EmployeeModel) o;
-        return Objects.equals(employeeId, that.employeeId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(salary, that.salary) && Objects.equals(address, that.address) && Objects.equals(department, that.department) && Objects.equals(employeeStatus, that.employeeStatus) && Objects.equals(bankId, that.bankId);
+        return Objects.equals(employeeId, that.employeeId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(age, that.age) && Objects.equals(salary, that.salary) && Objects.equals(address, that.address) && Objects.equals(department, that.department) && Objects.equals(employeeStatus, that.employeeStatus) && Objects.equals(bankId, that.bankId) && Arrays.equals(image, that.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeId, firstName, lastName, age, salary, address, department, employeeStatus, bankId);
+        int result = Objects.hash(employeeId, firstName, lastName, age, salary, address, department, employeeStatus, bankId);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 
     @Override
@@ -149,6 +138,7 @@ public class EmployeeModel {
                 ", department='" + department + '\'' +
                 ", employeeStatus=" + employeeStatus +
                 ", bankId=" + bankId +
+                ", image=" + Arrays.toString(image) +
                 '}';
     }
 }
