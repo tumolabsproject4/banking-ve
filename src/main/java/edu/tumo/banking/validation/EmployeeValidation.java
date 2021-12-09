@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeValidation {
-    public boolean validateForNull(EmployeeModel employeeModel) {
+    public static boolean validateEmployeeModel(EmployeeModel employeeModel) {
         if (employeeModel != null) {
             if (employeeModel.getFirstName()!=null && !employeeModel.getFirstName().isEmpty()
             && employeeModel.getLastName()!=null && !employeeModel.getLastName().isEmpty()

@@ -1,14 +1,29 @@
 package edu.tumo.banking.service.employee;
 
+import edu.tumo.banking.domain.bank.model.BankModel;
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
-    List<EmployeeModel> findAll();
+
     EmployeeModel add(EmployeeModel employeeModel);
-    EmployeeModel update(EmployeeModel employeeModel);
+
+    EmployeeModel addImage(Long id, MultipartFile image);
+
+    List<EmployeeModel> findAll();
+
+    List<EmployeeModel> findStaffFromBank(Long id);
+
+    List<EmployeeModel> findEmployeesFromDepartment(Long id,String department);
+
     Optional<EmployeeModel> findById(Long id);
-    void deleteEmployeeModelById(Long id );
+
+    Optional<EmployeeModel> update(EmployeeModel employeeModel);
+
+    void deleteEmployeeById(Long id);
+
+    void deleteImageByEmployeeId(Long id);
 }
