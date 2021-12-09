@@ -9,6 +9,8 @@ public interface BankService {
 
     BankModel add(BankModel bankModel);
 
+    byte[] getImage(Long id);
+
     BankModel update(BankModel bank);
 
     BankModel findById(Long id);
