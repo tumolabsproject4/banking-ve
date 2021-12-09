@@ -15,7 +15,11 @@ public class UserValidation {
 
     private final Logger logger = LogManager.getLogger(UserValidation.class);
 
-    public boolean validateForUser(UserModel userModel) throws IOException,SQLException{
+    public boolean validateForUser(UserModel userModel) {
+
+        if(userModel == null)
+            return false;
+
         if(userModel.getUserId() == null){
             logger.warn("Id of bank cannot be null");
             return false;
