@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,8 +31,11 @@ public class EmployeeController {
     }
 
     @PutMapping("/addimage")
-    public ResponseEntity<EmployeeModel> addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
-        return new ResponseEntity<>(employeeService.addImage(id, image), HttpStatus.CREATED);
+    public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
+        EmployeeModel employeeModel = employeeService.addImage(id,image);
+        model.addAttribute("employee",employeeModel);
+
+        return "employeeChanges";
     }
 
     @GetMapping
@@ -40,7 +44,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @GetMapping("{id/staff}")
+    @GetMapping("{staff}")
     public ResponseEntity<List<EmployeeModel>> findStaff(@PathVariable Long id) {
         List<EmployeeModel> employee = employeeService.findStaffFromBank(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
@@ -63,6 +67,7 @@ public class EmployeeController {
         employeeService.deleteEmployeeById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @DeleteMapping("/{id}/image")
     public ResponseEntity<?> deleteImageById(@PathVariable Long id){
         employeeService.deleteEmployeeById(id);
