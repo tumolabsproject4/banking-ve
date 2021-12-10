@@ -31,7 +31,7 @@ public class BankController {
     }
 
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<BankModel> addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
         return new ResponseEntity<>(bankService.addImage(id, image), HttpStatus.CREATED);
     }

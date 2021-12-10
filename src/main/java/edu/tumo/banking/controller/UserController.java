@@ -33,16 +33,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserModel> findUserById(@PathVariable Long id) {
-        UserModel model = userService.findById(id);
-        return new ResponseEntity<>(model, HttpStatus.OK);
-    }
+
 
     @PutMapping
-    public ResponseEntity<UserModel> updateUser(@RequestBody UserModel updatedUser) {
-        return new ResponseEntity<>(userService.update(updatedUser), HttpStatus.OK);
-    }
+    //public ResponseEntity<UserModel> updateUser(@RequestBody UserModel updatedUser) {
+        //return new ResponseEntity<>(userService.update(updatedUser), HttpStatus.OK);
+    //}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
