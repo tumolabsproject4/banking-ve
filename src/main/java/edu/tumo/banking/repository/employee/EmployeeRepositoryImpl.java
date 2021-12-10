@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    @Transactional
     public EmployeeModel add(EmployeeModel employeeModel) {
         String sql = "INSERT INTO employee('first_name','last_name','age','salary','address','department','employees_status','bank_id') VALUES(?,?,?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -53,6 +55,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    @Transactional
     public EmployeeModel addImage(Long id, MultipartFile image) {
         Optional<EmployeeModel> employee = findById(id);
         String sql = "UPDATE employee SET image = ? where employee_id = ?";
@@ -92,19 +95,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public List<EmployeeModel> findEmployeesFromDepartment(Long id, String department) {
-        String sql = "SELECT * FROM employee where bank_id =? , department = ?";
-        List<EmployeeModel> employeesSameDepartment = null;
-        try {
-            employeesSameDepartment = jdbcTemplate.query(sql, new EmployeeRowMapper(), id, department);
-        } catch (DataAccessException ex) {
-            logger.error("Employees from same department{} are not found from bank{}", department, id);
-        }
-        logger.info("Employees from same department{} are found  from bank{}  ", department, id);
-        return employeesSameDepartment;
-    }
-
-    @Override
     public Optional<EmployeeModel> findById(Long id) {
         String sql = "SELECT * FROM employee WHERE employee_id= ?";
         EmployeeModel employeeModel = null;
@@ -119,6 +109,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    @Transactional
     public Optional<EmployeeModel> update(EmployeeModel employee) {
         String sql = "UPDATE employee SET first_name=?, last_name=?, age=?, salary=?, address=?,department=?,employees_status=?,bank_id=? WHERE employee_id=?";
         int status = jdbcTemplate.update(sql, employee.getEmployeeId(), employee.getFirstName(),
@@ -132,6 +123,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    @Transactional
     public void deleteEmployeeById(Long id) {
         String sql = "DELETE FROM employee WHERE employee_id = ?";
         int status = jdbcTemplate.update(sql, id);
@@ -141,6 +133,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    @Transactional
     public void deleteImageByEmployeeId(Long id) {
         String sql = "UPDATE employee SET image=null WHERE employee_id=?";
         int status = jdbcTemplate.update(sql, id);

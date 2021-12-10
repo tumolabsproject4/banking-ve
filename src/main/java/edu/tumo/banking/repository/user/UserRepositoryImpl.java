@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -27,6 +28,7 @@ public class UserRepositoryImpl implements UserRepository {
     private final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
 
     @Override
+    @Transactional
     public UserModel add(UserModel userModel) {
         String sql = "INSERT INTO user('username','user_password') VALUES(?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -80,6 +82,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public Optional<UserModel> update(UserModel user) {
         String sql = "UPDATE user SET username=?, user_password=? where user_id=?";
         int update = jdbcTemplate.update(sql, user.getUserId(), user.getUsername(), user.getPassword());
@@ -91,6 +94,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Long id) {
         String sql = "DELETE FROM user WHERE user_id= ?";
         int status = jdbcTemplate.update(sql, id);

@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS banking_ve;
 CREATE TABLE IF NOT EXISTS user
 (
     user_id       BIGINT PRIMARY KEY auto_increment,
-    username      VARCHAR(255) ,
+    username      VARCHAR(255) NOT NULL UNIQUE ,
     user_password VARCHAR(255)
 );
 

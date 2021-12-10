@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,15 +26,18 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @PostMapping
+    @PostMapping("/addbanks")
     public ResponseEntity<BankModel> addBank(@RequestBody BankModel newBank) {
         return new ResponseEntity<>(bankService.add(newBank), HttpStatus.CREATED);
     }
 
 
-    @PostMapping
-    public ResponseEntity<BankModel> addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
-        return new ResponseEntity<>(bankService.addImage(id, image), HttpStatus.CREATED);
+    @PostMapping("/{id}/addimage")
+    public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
+        BankModel bankModel = bankService.addImage(id, image);
+        model.addAttribute("bank",bankModel);
+
+        return "bankChanges";
     }
 
     @GetMapping
@@ -60,7 +64,13 @@ public class BankController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBankById(@PathVariable Long id) {
         bankService.deleteBankModelById(id);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}/image")
+    public ResponseEntity<?> deleteImageById(@PathVariable Long id){
+        bankService.deleteImageByBankId(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

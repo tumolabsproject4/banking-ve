@@ -24,12 +24,12 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping
+    @PostMapping("/addemployee")
     public ResponseEntity<EmployeeModel> addEmployee(@RequestBody EmployeeModel employee) {
         return new ResponseEntity<>(employeeService.add(employee), HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/addimage")
     public ResponseEntity<EmployeeModel> addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
         return new ResponseEntity<>(employeeService.addImage(id, image), HttpStatus.CREATED);
     }
@@ -40,17 +40,12 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @GetMapping("{id/cast}")
+    @GetMapping("{id/staff}")
     public ResponseEntity<List<EmployeeModel>> findStaff(@PathVariable Long id) {
         List<EmployeeModel> employee = employeeService.findStaffFromBank(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @GetMapping("/{id/department}")
-    public ResponseEntity<List<EmployeeModel>> findEmployeesDepartment(@PathVariable Long id, @PathVariable String department) {
-        List<EmployeeModel> employee = employeeService.findEmployeesFromDepartment(id, department);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable Long id) {
@@ -66,6 +61,11 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEmployeeById(@PathVariable Long id) {
         employeeService.deleteEmployeeById(id);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @DeleteMapping("/{id}/image")
+    public ResponseEntity<?> deleteImageById(@PathVariable Long id){
+        employeeService.deleteEmployeeById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

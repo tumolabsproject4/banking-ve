@@ -47,17 +47,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public List<UserModel> findAll() {
         logger.info("Users are found");
         return userRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Optional<UserModel> findById(Long id) {
         Optional<UserModel> userModel = userRepository.findById(id);
-        if (userModel == null) {
+        if (userModel.isEmpty()) {
             logger.warn("User with the following id {} is not found", id);
             throw new NotFoundValueException("User with the following id" + id + "is not found");
         }
@@ -66,10 +64,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public Optional<UserModel> findByUserName(String userName) {
-        Optional<UserModel> userModel = userRepository.findByUserName(userName);//hnaravor tarberak havasar e null
-        if (userModel == null) {
+        Optional<UserModel> userModel = userRepository.findByUserName(userName);
+        if (userModel.isEmpty()) {
             logger.warn("User with the username {} doesn't exist ", userName);
             throw new NotFoundValueException("User with the username" + userName + "exists");
         }
@@ -85,7 +82,7 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotValidException("User" + userModel + "is not valid");
         }
         Optional<UserModel> user = userRepository.findById(userModel.getUserId());
-        if (user == null) {
+        if (user.isEmpty()) {
             logger.warn("User with the following id {} is not found", userModel.getUserId());
             throw new NotFoundValueException("User with the following id" + userModel.getUserId() + "is not found");
         }

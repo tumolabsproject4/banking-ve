@@ -44,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public EmployeeModel addImage(Long id, MultipartFile image) {
         Optional<EmployeeModel> employee = employeeRepository.findById(id);
-        if (employee == null) {
+        if (employee.isEmpty()) {
             logger.warn("Employee with following id {} is not found", id);
             throw new NotFoundValueException("Employee with following id" + id + "is not found");
         }
@@ -53,31 +53,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
     public List<EmployeeModel> findAll() {
         logger.info("Employees are found");
         return employeeRepository.findAll();
     }
 
     @Override
-    @Transactional
     public List<EmployeeModel> findStaffFromBank(Long id) {
         logger.info("Staff is found from bank{}", id);
         return employeeRepository.findStaffFromBank(id);
     }
 
-    @Override
-    public List<EmployeeModel> findEmployeesFromDepartment(Long id, String department) {
-        logger.info("Employees from department{} from bank{} are found", department, id);
-        return employeeRepository.findEmployeesFromDepartment(id, department);
-    }
-
 
     @Override
-    @Transactional
     public Optional<EmployeeModel> findById(Long id) {
         Optional<EmployeeModel> employee = employeeRepository.findById(id);
-        if (!employee.isPresent()) {
+        if (employee.isEmpty()) {
             logger.warn("Employee with the following id {} doesn't exist", id);
             throw new ResourceNotValidException("Employee with the following id" + id + "doesn't exist");
         }
@@ -93,7 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ResourceNotValidException("Employee with id " + employeeModel.getEmployeeId() + "is not valid");
         }
         Optional<EmployeeModel> employee = employeeRepository.findById(employeeModel.getEmployeeId());
-        if (employee == null) {
+        if (employee.isEmpty()) {
             logger.warn("Employee with the following id {} is not found", employeeModel.getEmployeeId());
             throw new NotFoundValueException("Employee with the following id " + employeeModel.getEmployeeId() + "is not found");
 

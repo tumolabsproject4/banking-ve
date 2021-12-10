@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class BankRepositoryImpl implements BankRepository {
     }
 
     @Override
+    @Transactional
     public BankModel add(BankModel bankModel) {
         String sql = "INSERT INTO bank('bank_name','address') VALUES(?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -49,6 +51,7 @@ public class BankRepositoryImpl implements BankRepository {
     }
 
     @Override
+    @Transactional
     public BankModel addImage(Long id, MultipartFile image) {
         Optional<BankModel> bank = findById(id);
         String sql = "UPDATE bank SET image = ? where bank_id = ?";
@@ -87,6 +90,7 @@ public class BankRepositoryImpl implements BankRepository {
     }
 
     @Override
+    @Transactional
     public Optional<BankModel> update(BankModel bank) {
         String sql = "UPDATE bank SET bank_name=?, adress=? WHERE bank_id=?";
         int update = jdbcTemplate.update(sql, bank.getBankName(), bank.getAddress(), bank.getBankID());
@@ -98,6 +102,7 @@ public class BankRepositoryImpl implements BankRepository {
     }
 
     @Override
+    @Transactional
     public void deleteBankModelById(Long id) {
         String sql = "DELETE FROM bank WHERE bank_id = ?";
         int status = jdbcTemplate.update(sql, id);
@@ -107,6 +112,7 @@ public class BankRepositoryImpl implements BankRepository {
     }
 
     @Override
+    @Transactional
     public void deleteImageByBankId(Long id) {
         String sql = "UPDATE bank SET image=null WHERE bank_id=?";
         int status = jdbcTemplate.update(sql, id);

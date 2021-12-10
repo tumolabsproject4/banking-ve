@@ -45,27 +45,25 @@ public class BankServiceImpl implements BankService {
     @Transactional
     public BankModel addImage(Long id, MultipartFile image) {
         Optional<BankModel> bankModel = bankRepository.findById(id);
-        if (bankModel == null) {
+        if (bankModel.isEmpty()) {
             logger.warn("The bank with id {} is not found ", id);
             throw new NotFoundValueException("The bank with id " + id + "is not found");
         }
-        logger.info("The image is successfully added", image);
+        logger.info("The image{} is successfully added", image);
 
         return bankRepository.addImage(id, image);
     }
 
     @Override
-    @Transactional
     public List<BankModel> findAll() {
         logger.info("Banks are found");
         return bankRepository.findAll();
     }
 
     @Override
-    @Transactional
     public BankModel findById(Long id) {
         Optional<BankModel> bankModel = bankRepository.findById(id);
-        if (!bankModel.isPresent()) {
+        if (bankModel.isEmpty()) {
             logger.warn("Bank with the following id {} doesn't exist", id);
             throw new ResourceNotValidException("Bank with the following id" + id + "doesn't exist");
         }
@@ -82,7 +80,7 @@ public class BankServiceImpl implements BankService {
             throw new ResourceNotValidException("The bank with id " + bank.getBankID() + "is not valid");
         }
         Optional<BankModel> bankModel = bankRepository.findById(bank.getBankID());
-        if (bankModel == null) {
+        if (bankModel.isEmpty()) {
             logger.warn("The bank with the following id {} is not found", bank);
             throw new NotFoundValueException("The bank with the following id " + bank.getBankID() + "is not found");
 
@@ -93,17 +91,10 @@ public class BankServiceImpl implements BankService {
     }
 
 
-//    @Override
-//    public byte[] getImage(Long id) {
-//        Optional<BankModel> bankModel=bankRepository.findById(id);
-//        return bankModel.get().getImage();
-//    }
-
-
     @Override
     @Transactional
     public void deleteBankModelById(Long id) {
-        BankModel bank = (BankModel) bankRepository.findById(id).orElse(null);
+        BankModel bank = bankRepository.findById(id).orElse(null);
         if (bank == null) {
             logger.warn("Bank{} is not found", id);
             throw new NotFoundValueException("Bank" + id + "is not found");
