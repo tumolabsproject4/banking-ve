@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class BankModel {
-    Long bankID;
+    Long bankID;//private sarqel
     String bankName;
     String address;
     byte[] image;

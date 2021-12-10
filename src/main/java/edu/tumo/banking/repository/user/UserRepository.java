@@ -1,10 +1,12 @@
 package edu.tumo.banking.repository.user;
 
 
+import edu.tumo.banking.domain.user.UserModel;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository<UserModel,Long>{
+public interface UserRepository{
 
     UserModel add(UserModel userModel);
 

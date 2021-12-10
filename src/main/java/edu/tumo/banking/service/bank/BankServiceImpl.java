@@ -33,12 +33,12 @@ public class BankServiceImpl implements BankService{
     @Transactional
     public BankModel add(BankModel bankModel) {
         if (!BankValidation.validateBankModel(bankModel)){
-            logger.warn("The bank {} is not valid", bankModel);
+            logger.info("The bank {} is not valid", bankModel);
             throw new ResourceNotValidException("The bank is not valid");
         }
 
         logger.info("The bank is successfully added", bankModel);
-        return (BankModel) bankRepository.add(bankModel);
+        return bankRepository.add(bankModel);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class BankServiceImpl implements BankService{
         }
         logger.info("The image is successfully added", image);
 
-        return (BankModel) bankRepository.addImage(id,image);
+        return bankRepository.addImage(id,image);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class BankServiceImpl implements BankService{
 
         }
         logger.info("The bank is updated",bank);
-        return (BankModel) bankRepository.update(bank).get();
+        return bankRepository.update(bank).get();
 
     }
 

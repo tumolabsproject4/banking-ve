@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class BankRepositoryImpl implements BankRepository<BankModel, Long> {
+public class BankRepositoryImpl implements BankRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

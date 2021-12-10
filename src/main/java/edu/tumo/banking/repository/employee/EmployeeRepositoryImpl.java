@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class EmployeeRepositoryImpl implements EmployeeRepository<EmployeeModel, Long> {
+public class EmployeeRepositoryImpl implements EmployeeRepository{
 
     private final JdbcTemplate jdbcTemplate;
 

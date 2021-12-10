@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-public interface BankRepository<BankModel, Long>{
+public interface BankRepository{
     BankModel add(BankModel bankModel);
 
     BankModel addImage(Long id, MultipartFile image);

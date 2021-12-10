@@ -1,13 +1,10 @@
 package edu.tumo.banking.service.employee;
 
 
-import edu.tumo.banking.domain.bank.model.BankModel;
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
 import edu.tumo.banking.exception.NotFoundValueException;
-import edu.tumo.banking.exception.ResourceNotFoundException;
 import edu.tumo.banking.exception.ResourceNotValidException;
 import edu.tumo.banking.repository.employee.EmployeeRepository;
-import edu.tumo.banking.validation.BankValidation;
 import edu.tumo.banking.validation.EmployeeValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ResourceNotValidException("Employee is not valid");
         }
         logger.info("Employee{} is successfully added",employeeModel);
-        return (EmployeeModel) employeeRepository.add(employeeModel);
+        return employeeRepository.add(employeeModel);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new NotFoundValueException("Employee with following id" + id + "is not found");
         }
         logger.info("Image{} is added", image);
-        return (EmployeeModel) employeeRepository.addImage(id, image);
+        return employeeRepository.addImage(id, image);
     }
 
     @Override
@@ -103,13 +100,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         logger.info("Employee is updated",employeeModel);
 
-        return (EmployeeModel) employeeRepository.update(employeeModel).get();
+        return employeeRepository.update(employeeModel).get();
     }
 
     @Override
     @Transactional
     public void deleteEmployeeById(Long id) {
-        EmployeeModel employee = (EmployeeModel) employeeRepository.findById(id).orElse(null);
+        EmployeeModel employee =  employeeRepository.findById(id).orElse(null);
         if(employee == null){
             logger.warn("Employee{} is not found", id);
             throw new NotFoundValueException("Employee"+ id +"is not found");
@@ -122,15 +119,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void deleteImageByEmployeeId(Long id) {
-        EmployeeModel employee = (EmployeeModel) employeeRepository.findById(id).orElse(null);
+        EmployeeModel employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             logger.warn("Employee {} is not found", id);
             throw new NotFoundValueException("Bank"+ id +"is not found");
         }
         logger.info("Image of employee{} is deleted",id);
         employeeRepository.deleteImageByEmployeeId(id);
-
     }
-
-    }
+}
 
