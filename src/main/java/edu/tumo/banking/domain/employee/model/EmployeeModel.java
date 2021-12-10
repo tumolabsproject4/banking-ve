@@ -4,19 +4,20 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class EmployeeModel {
-    Long employeeId;
-    String firstName;
-    String lastName;
-    Integer age;
-    Float salary;
-    String address;
-    String department;
-    Boolean employeeStatus;
-    Long bankId;
-    byte[] image;
+    private Long employeeId;
+    private String firstName;
+    private String lastName;
+    private Integer age;
+    private Float salary;
+    private String address;
+    private String department;
+    private Boolean employeeStatus;
+    private Long bankId;
+    private byte[] image;
 
     public EmployeeModel() {
     }
+
     public EmployeeModel(Long employeeId, String firstName, String lastName, Integer age, Float salary, String address, String department, Boolean employeeStatus, Long bankId, byte[] image) {
         this.employeeId = employeeId;
         this.firstName = firstName;

@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class UserModel {
 
-    Long userId;
-    String username;
-    String password;
+    private Long userId;
+    private String username;
+    private String password;
 
     public UserModel() {
     }

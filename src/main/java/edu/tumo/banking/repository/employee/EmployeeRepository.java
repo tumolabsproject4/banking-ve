@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-public interface EmployeeRepository{
+public interface EmployeeRepository {
 
     EmployeeModel add(EmployeeModel employeeModel);
 
@@ -16,13 +16,13 @@ public interface EmployeeRepository{
 
     List<EmployeeModel> findStaffFromBank(Long id);
 
-    List<EmployeeModel> findEmployeesFromDepartment(Long id,String department);
+    List<EmployeeModel> findEmployeesFromDepartment(Long id, String department);
 
     Optional<EmployeeModel> findById(Long id);
 
     Optional<EmployeeModel> update(EmployeeModel employeeModel);
 
-    void deleteEmployeeById(Long id );
+    void deleteEmployeeById(Long id);
 
     void deleteImageByEmployeeId(Long id);
 }

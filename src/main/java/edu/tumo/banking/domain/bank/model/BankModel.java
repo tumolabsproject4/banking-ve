@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class BankModel {
-    Long bankID;//private sarqel
-    String bankName;
-    String address;
-    byte[] image;
+    private Long bankID;
+    private String bankName;
+    private String address;
+    private byte[] image;
 
     public BankModel() {
     }
@@ -24,7 +24,8 @@ public class BankModel {
         this.bankName = bankName;
         this.address = address;
     }
-    public BankModel( String bankName, String address) {
+
+    public BankModel(String bankName, String address) {
         this.bankName = bankName;
         this.address = address;
     }
@@ -36,6 +37,7 @@ public class BankModel {
     public void setBankID(Long bankID) {
         this.bankID = bankID;
     }
+
     public String getBankName() {
         return bankName;
     }

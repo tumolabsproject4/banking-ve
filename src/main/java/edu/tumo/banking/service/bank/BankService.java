@@ -17,7 +17,7 @@ public interface BankService {
 
     BankModel update(BankModel bank);
 
-    void deleteBankModelById(Long id );
+    void deleteBankModelById(Long id);
 
     void deleteImageByBankId(Long id);
 

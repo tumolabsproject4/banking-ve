@@ -26,14 +26,14 @@ public class BankController {
     }
 
     @PostMapping
-    public ResponseEntity<BankModel> addBank(@RequestBody BankModel newBank){
+    public ResponseEntity<BankModel> addBank(@RequestBody BankModel newBank) {
         return new ResponseEntity<>(bankService.add(newBank), HttpStatus.CREATED);
     }
 
 
     @PutMapping
-    public ResponseEntity<BankModel> addImage(@PathVariable Long id , @RequestParam("image")MultipartFile image){
-        return new ResponseEntity<>(bankService.addImage(id,image),HttpStatus.CREATED);
+    public ResponseEntity<BankModel> addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
+        return new ResponseEntity<>(bankService.addImage(id, image), HttpStatus.CREATED);
     }
 
     @GetMapping

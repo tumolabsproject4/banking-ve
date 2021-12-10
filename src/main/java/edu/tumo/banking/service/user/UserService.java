@@ -3,11 +3,20 @@ package edu.tumo.banking.service.user;
 import edu.tumo.banking.domain.user.UserModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    List<UserModel> findAll();
+
     UserModel add(UserModel userModel);
-    UserModel update(UserModel userModel);
-    UserModel findById(Long id);
+
+    List<UserModel> findAll();
+
+    Optional<UserModel> findById(Long id);
+
+    Optional<UserModel> findByUserName(String userName);
+
+    Optional<UserModel> update(UserModel userModel);
+
     void deleteUserById(Long id);
+
 }

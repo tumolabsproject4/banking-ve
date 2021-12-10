@@ -18,21 +18,21 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class BankServiceImpl implements BankService{
+public class BankServiceImpl implements BankService {
 
     private final BankRepository bankRepository;
 
     private final Logger logger = LogManager.getLogger(BankServiceImpl.class);
 
     @Autowired
-    public BankServiceImpl(BankRepository bankRepository){
-        this.bankRepository=bankRepository;
+    public BankServiceImpl(BankRepository bankRepository) {
+        this.bankRepository = bankRepository;
     }
 
     @Override
     @Transactional
     public BankModel add(BankModel bankModel) {
-        if (!BankValidation.validateBankModel(bankModel)){
+        if (!BankValidation.validateBankModel(bankModel)) {
             logger.info("The bank {} is not valid", bankModel);
             throw new ResourceNotValidException("The bank is not valid");
         }
@@ -44,14 +44,14 @@ public class BankServiceImpl implements BankService{
     @Override
     @Transactional
     public BankModel addImage(Long id, MultipartFile image) {
-        Optional<BankModel> bankModel =  bankRepository.findById(id);
-        if(bankModel == null){
+        Optional<BankModel> bankModel = bankRepository.findById(id);
+        if (bankModel == null) {
             logger.warn("The bank with id {} is not found ", id);
             throw new NotFoundValueException("The bank with id " + id + "is not found");
         }
         logger.info("The image is successfully added", image);
 
-        return bankRepository.addImage(id,image);
+        return bankRepository.addImage(id, image);
     }
 
     @Override
@@ -64,13 +64,12 @@ public class BankServiceImpl implements BankService{
     @Override
     @Transactional
     public BankModel findById(Long id) {
-        Optional<BankModel> bankModel= bankRepository.findById(id);
-        if(!bankModel.isPresent())
-        {
+        Optional<BankModel> bankModel = bankRepository.findById(id);
+        if (!bankModel.isPresent()) {
             logger.warn("Bank with the following id {} doesn't exist", id);
-            throw new ResourceNotValidException("Bank with the following id" + id +"doesn't exist");
+            throw new ResourceNotValidException("Bank with the following id" + id + "doesn't exist");
         }
-        logger.info("Bank with the following id {} is found",id);
+        logger.info("Bank with the following id {} is found", id);
         return bankModel.orElseThrow(ResourceNotFoundException::new);
 
     }
@@ -78,17 +77,17 @@ public class BankServiceImpl implements BankService{
     @Override
     @Transactional
     public BankModel update(BankModel bank) {
-        if(!BankValidation.validateBankModel(bank)){
-            logger.warn("The bank {} is not valid",bank);
-            throw  new ResourceNotValidException("The bank with id " + bank.getBankID() + "is not valid");
+        if (!BankValidation.validateBankModel(bank)) {
+            logger.warn("The bank {} is not valid", bank);
+            throw new ResourceNotValidException("The bank with id " + bank.getBankID() + "is not valid");
         }
         Optional<BankModel> bankModel = bankRepository.findById(bank.getBankID());
-        if(bankModel == null){
-            logger.warn("The bank with the following id {} is not found",bank);
+        if (bankModel == null) {
+            logger.warn("The bank with the following id {} is not found", bank);
             throw new NotFoundValueException("The bank with the following id " + bank.getBankID() + "is not found");
 
         }
-        logger.info("The bank is updated",bank);
+        logger.info("The bank{} is updated", bank);
         return bankRepository.update(bank).get();
 
     }
@@ -101,16 +100,15 @@ public class BankServiceImpl implements BankService{
 //    }
 
 
-
     @Override
     @Transactional
     public void deleteBankModelById(Long id) {
         BankModel bank = (BankModel) bankRepository.findById(id).orElse(null);
-        if(bank == null){
+        if (bank == null) {
             logger.warn("Bank{} is not found", id);
-            throw new NotFoundValueException("Bank"+ id +"is not found");
+            throw new NotFoundValueException("Bank" + id + "is not found");
         }
-        logger.info("Bank{} is deleted",id);
+        logger.info("Bank{} is deleted", id);
         bankRepository.deleteBankModelById(id);
     }
 
@@ -118,11 +116,11 @@ public class BankServiceImpl implements BankService{
     @Transactional
     public void deleteImageByBankId(Long id) {
         BankModel bank = (BankModel) bankRepository.findById(id).orElse(null);
-        if(bank == null){
+        if (bank == null) {
             logger.warn("Bank{} is not found", id);
-            throw new NotFoundValueException("Bank"+ id +"is not found");
+            throw new NotFoundValueException("Bank" + id + "is not found");
         }
-        logger.info("Image of bank{} is deleted",id);
+        logger.info("Image of bank{} is deleted", id);
         bankRepository.deleteImageByBankId(id);
     }
 }

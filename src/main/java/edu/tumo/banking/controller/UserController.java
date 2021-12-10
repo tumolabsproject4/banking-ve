@@ -23,7 +23,7 @@ public class UserController {
 
     @PostMapping
 
-    public ResponseEntity<UserModel> adduser( @RequestBody UserModel user) {
+    public ResponseEntity<UserModel> adduser(@RequestBody UserModel user) {
         return new ResponseEntity<>(userService.add(user), HttpStatus.CREATED);
     }
 
@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserModel> findUserById(@PathVariable Long id){
-        UserModel model=userService.findById(id);
+    public ResponseEntity<UserModel> findUserById(@PathVariable Long id) {
+        UserModel model = userService.findById(id);
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 

@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-public interface BankRepository{
+public interface BankRepository {
     BankModel add(BankModel bankModel);
 
     BankModel addImage(Long id, MultipartFile image);
@@ -15,10 +15,9 @@ public interface BankRepository{
 
     Optional<BankModel> findById(Long id);
 
-
     Optional<BankModel> update(BankModel bank);
 
-    void deleteBankModelById(Long id );
+    void deleteBankModelById(Long id);
 
     void deleteImageByBankId(Long id);
 

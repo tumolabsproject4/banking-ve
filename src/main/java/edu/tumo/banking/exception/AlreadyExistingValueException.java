@@ -1,8 +1,8 @@
 package edu.tumo.banking.exception;
 
-public class AlreadyExistingValueException extends RuntimeException{
+public class AlreadyExistingValueException extends RuntimeException {
 
-    public AlreadyExistingValueException() {
+    public AlreadyExistingValueException(String s) {
         super(" The value already exists");
     }
 

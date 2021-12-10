@@ -17,7 +17,7 @@ public interface EmployeeService {
 
     List<EmployeeModel> findStaffFromBank(Long id);
 
-    List<EmployeeModel> findEmployeesFromDepartment(Long id,String department);
+    List<EmployeeModel> findEmployeesFromDepartment(Long id, String department);
 
     Optional<EmployeeModel> findById(Long id);
 

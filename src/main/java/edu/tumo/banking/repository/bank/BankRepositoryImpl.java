@@ -35,12 +35,12 @@ public class BankRepositoryImpl implements BankRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int inserted = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"bank_id"});
-            ps.setString(1,bankModel.getBankName());
-            ps.setString(2,bankModel.getAddress());
+            ps.setString(1, bankModel.getBankName());
+            ps.setString(2, bankModel.getAddress());
             return ps;
         }, keyHolder);
         if (inserted == 1) {
-            Number keyNumber=keyHolder.getKey();
+            Number keyNumber = keyHolder.getKey();
             bankModel.setBankID(keyNumber.longValue());
             return bankModel;
         }
@@ -50,20 +50,19 @@ public class BankRepositoryImpl implements BankRepository {
 
     @Override
     public BankModel addImage(Long id, MultipartFile image) {
-        Optional<BankModel> bank=findById(id);
+        Optional<BankModel> bank = findById(id);
         String sql = "UPDATE bank SET image = ? where bank_id = ?";
-        byte[] bytes= new byte[0];
+        byte[] bytes = new byte[0];
         try {
             bytes = image.getBytes();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int update = jdbcTemplate.update(sql, bytes,id);
-        if(update==1)
-        {
+        int update = jdbcTemplate.update(sql, bytes, id);
+        if (update == 1) {
             return bank.get().setImage(bytes);
         }
-        logger.warn("This image not added to bank id {}",id);
+        logger.warn("This image not added to bank id {}", id);
         return null;
     }
 
@@ -77,44 +76,42 @@ public class BankRepositoryImpl implements BankRepository {
     @Override
     public Optional<BankModel> findById(Long id) {
         String sql = "SELECT * FROM bank WHERE bank_id = ?";
-        BankModel bankModel=null;
-        try{
-            bankModel = jdbcTemplate.queryForObject(sql,new BankRowMapper(), id);
-        }catch (DataAccessException ex) {
-            logger.error("Bank not found with id {}",id);
+        BankModel bankModel = null;
+        try {
+            bankModel = jdbcTemplate.queryForObject(sql, new BankRowMapper(), id);
+        } catch (DataAccessException ex) {
+            logger.error("Bank not found with id {}", id);
         }
-        logger.info("Bank id{} is found ",id);
+        logger.info("Bank id{} is found ", id);
         return Optional.ofNullable(bankModel);
     }
 
     @Override
     public Optional<BankModel> update(BankModel bank) {
         String sql = "UPDATE bank SET bank_name=?, adress=? WHERE bank_id=?";
-        int update = jdbcTemplate.update(sql, bank.getBankName(),bank.getAddress(), bank.getBankID());
-        if(update == 1){
+        int update = jdbcTemplate.update(sql, bank.getBankName(), bank.getAddress(), bank.getBankID());
+        if (update == 1) {
             return findById(bank.getBankID());
         }
-        logger.warn("Bank {} is not updated",bank);
+        logger.warn("Bank {} is not updated", bank);
         return Optional.empty();
     }
 
     @Override
-    public void deleteBankModelById (Long id)
-    {
-        String sql="DELETE FROM bank WHERE bank_id = ?";
-        int status = jdbcTemplate.update(sql,id);
-        if(status ==1){
-           logger.info("Bank {} was deleted ", id);
+    public void deleteBankModelById(Long id) {
+        String sql = "DELETE FROM bank WHERE bank_id = ?";
+        int status = jdbcTemplate.update(sql, id);
+        if (status == 1) {
+            logger.info("Bank {} was deleted ", id);
         }
     }
 
     @Override
     public void deleteImageByBankId(Long id) {
-        String sql= "UPDATE bank SET image=null WHERE bank_id=?";
-        int status=jdbcTemplate.update(sql,id);
-        if(status==1)
-        {
-            logger.info("The image of Bank with id {} was deleted",id);
+        String sql = "UPDATE bank SET image=null WHERE bank_id=?";
+        int status = jdbcTemplate.update(sql, id);
+        if (status == 1) {
+            logger.info("The image of Bank with id {} was deleted", id);
         }
     }
 }

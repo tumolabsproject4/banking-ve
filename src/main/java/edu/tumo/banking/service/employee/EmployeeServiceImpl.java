@@ -32,11 +32,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeModel add(EmployeeModel employeeModel) {
-        if(!EmployeeValidation.validateEmployeeModel(employeeModel)){
+        if (!EmployeeValidation.validateEmployeeModel(employeeModel)) {
             logger.warn("Employee{} is not valid", employeeModel);
             throw new ResourceNotValidException("Employee is not valid");
         }
-        logger.info("Employee{} is successfully added",employeeModel);
+        logger.info("Employee{} is successfully added", employeeModel);
         return employeeRepository.add(employeeModel);
     }
 
@@ -44,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public EmployeeModel addImage(Long id, MultipartFile image) {
         Optional<EmployeeModel> employee = employeeRepository.findById(id);
-        if(employee == null){
+        if (employee == null) {
             logger.warn("Employee with following id {} is not found", id);
             throw new NotFoundValueException("Employee with following id" + id + "is not found");
         }
@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public Optional<EmployeeModel> findById(Long id) {
         Optional<EmployeeModel> employee = employeeRepository.findById(id);
-        if(!employee.isPresent()){
+        if (!employee.isPresent()) {
             logger.warn("Employee with the following id {} doesn't exist", id);
             throw new ResourceNotValidException("Employee with the following id" + id + "doesn't exist");
         }
@@ -88,17 +88,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeModel update(EmployeeModel employeeModel) {
-        if(!EmployeeValidation.validateEmployeeModel(employeeModel)){
-            logger.warn("Employee {} is not valid",employeeModel);
-            throw  new ResourceNotValidException("Employee with id " + employeeModel.getEmployeeId() + "is not valid");
+        if (!EmployeeValidation.validateEmployeeModel(employeeModel)) {
+            logger.warn("Employee {} is not valid", employeeModel);
+            throw new ResourceNotValidException("Employee with id " + employeeModel.getEmployeeId() + "is not valid");
         }
         Optional<EmployeeModel> employee = employeeRepository.findById(employeeModel.getEmployeeId());
-        if(employee == null){
-            logger.warn("Employee with the following id {} is not found",employeeModel.getEmployeeId());
-            throw new NotFoundValueException("Employee with the following id " +employeeModel.getEmployeeId()  + "is not found");
+        if (employee == null) {
+            logger.warn("Employee with the following id {} is not found", employeeModel.getEmployeeId());
+            throw new NotFoundValueException("Employee with the following id " + employeeModel.getEmployeeId() + "is not found");
 
         }
-        logger.info("Employee is updated",employeeModel);
+        logger.info("Employee{} is updated", employeeModel);
 
         return employeeRepository.update(employeeModel).get();
     }
@@ -106,12 +106,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void deleteEmployeeById(Long id) {
-        EmployeeModel employee =  employeeRepository.findById(id).orElse(null);
-        if(employee == null){
+        EmployeeModel employee = employeeRepository.findById(id).orElse(null);
+        if (employee == null) {
             logger.warn("Employee{} is not found", id);
-            throw new NotFoundValueException("Employee"+ id +"is not found");
+            throw new NotFoundValueException("Employee" + id + "is not found");
         }
-        logger.info("Employee{} is deleted",id);
+        logger.info("Employee{} is deleted", id);
         employeeRepository.deleteEmployeeById(id);
 
     }
@@ -122,9 +122,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeModel employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
             logger.warn("Employee {} is not found", id);
-            throw new NotFoundValueException("Bank"+ id +"is not found");
+            throw new NotFoundValueException("Bank" + id + "is not found");
         }
-        logger.info("Image of employee{} is deleted",id);
+        logger.info("Image of employee{} is deleted", id);
         employeeRepository.deleteImageByEmployeeId(id);
     }
 }

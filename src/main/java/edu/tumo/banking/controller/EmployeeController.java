@@ -20,47 +20,46 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService,EmployeeValidation employeeValidation){
+    public EmployeeController(EmployeeService employeeService, EmployeeValidation employeeValidation) {
         this.employeeService = employeeService;
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeModel> addEmployee(@RequestBody EmployeeModel employee){
+    public ResponseEntity<EmployeeModel> addEmployee(@RequestBody EmployeeModel employee) {
         return new ResponseEntity<>(employeeService.add(employee), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<EmployeeModel> addImage(@PathVariable Long id , @RequestParam("image") MultipartFile image){
-        return new ResponseEntity<>(employeeService.addImage(id,image),HttpStatus.CREATED);
+    public ResponseEntity<EmployeeModel> addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image) {
+        return new ResponseEntity<>(employeeService.addImage(id, image), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeModel>> findEmployees(){
+    public ResponseEntity<List<EmployeeModel>> findEmployees() {
         List<EmployeeModel> employee = employeeService.findAll();
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @GetMapping("{id/cast}")
-    public ResponseEntity<List<EmployeeModel>> findStaff(@PathVariable Long id)
-    {
-        List<EmployeeModel> employee =employeeService.findStaffFromBank(id);
-        return new ResponseEntity<>(employee,HttpStatus.OK);
+    public ResponseEntity<List<EmployeeModel>> findStaff(@PathVariable Long id) {
+        List<EmployeeModel> employee = employeeService.findStaffFromBank(id);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
+
     @GetMapping("/{id/department}")
-    public  ResponseEntity<List<EmployeeModel>> findEmployeesDepartment(@PathVariable Long id,@PathVariable String department)
-    {
-        List<EmployeeModel> employee =employeeService.findEmployeesFromDepartment(id,department);
-        return new ResponseEntity<>(employee,HttpStatus.OK);
+    public ResponseEntity<List<EmployeeModel>> findEmployeesDepartment(@PathVariable Long id, @PathVariable String department) {
+        List<EmployeeModel> employee = employeeService.findEmployeesFromDepartment(id, department);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable Long id) {
-        Optional<EmployeeModel> model=employeeService.findById(id);
+        Optional<EmployeeModel> model = employeeService.findById(id);
         return new ResponseEntity<>(model.get(), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<EmployeeModel> updateEmployee( @RequestBody EmployeeModel updatedEmployee){
+    public ResponseEntity<EmployeeModel> updateEmployee(@RequestBody EmployeeModel updatedEmployee) {
         return new ResponseEntity<>(employeeService.update(updatedEmployee), HttpStatus.OK);
     }
 
