@@ -1,0 +1,32 @@
+.logo-image{
+    width: 159px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+.project-parag{
+    text-align: center;
+    background: #2e86c1;
+    padding: 11px;
+    font-size: 23px;
+    font-weight: 600;
+}
+.my-body{
+    background: #ebf5fb;
+}
+.big-container{
+    text-align: center;
+}
+.text-to-login{
+    margin-bottom: 0;
+    text-align: center;
+    padding: 33px;
+}
+.a-parag{
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
+.a-parag:hover{
+    color: #2e86c1;
+}
+
