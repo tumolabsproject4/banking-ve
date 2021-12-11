@@ -3,9 +3,8 @@ package edu.tumo.banking.controller;
 import edu.tumo.banking.domain.user.UserModel;
 import edu.tumo.banking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,39 +21,46 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-
-    public ResponseEntity<UserModel> adduser(@RequestBody UserModel user) {
-        return new ResponseEntity<>(userService.add(user), HttpStatus.CREATED);
+    @PostMapping("/addUsers")
+    public String addUser(@RequestBody UserModel user, Model model) {
+        UserModel userModel=userService.add(user);
+        model.addAttribute("user",userModel);
+        return "userCreate";
     }
 
-    @GetMapping("/{allusers}")
-    public ResponseEntity<List<UserModel>> findUsers() {
+    @GetMapping("/allUsers")
+    public String findUsers(Model model) {
         List<UserModel> user = userService.findAll();
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        model.addAttribute("user",user);
+        return "users";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserModel> findUserById(@PathVariable Long id){
-        Optional<UserModel> model = userService.findById(id);
-        return new ResponseEntity<>(model.get(), HttpStatus.OK);
+    public String findUserById(@PathVariable Long id,Model model){
+        Optional<UserModel> userModel = userService.findById(id);
+        model.addAttribute("user",userModel);
+        return "users";
     }
 
-    @GetMapping("/{id}username")
-    public ResponseEntity<UserModel> findUserByUsername(@PathVariable String username){
-        Optional<UserModel> model = userService.findByUserName(username);
-        return new ResponseEntity<>(model.get(), HttpStatus.OK);
+    @GetMapping("/username")
+    public String findUserByUsername(@PathVariable String username,Model model){
+        Optional<UserModel> user = userService.findByUserName(username);
+        model.addAttribute("bank",user);
+        return "users";
     }
 
     @PutMapping
-    public ResponseEntity<Optional<UserModel>> updateUser(@RequestBody UserModel updatedUser) {
-        return new ResponseEntity<>(userService.update(updatedUser), HttpStatus.OK);
+    public String updateUser(@RequestBody UserModel updatedUser,Model model) {
+        Optional<UserModel> user=userService.update(updatedUser);
+        model.addAttribute("user",user);
+        return "users";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
+    public String deleteUserById(@PathVariable Long id,Model model) {
         userService.deleteUserById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        model.addAttribute("user",null);
+        return "users";
     }
 
 }

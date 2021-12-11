@@ -1,11 +1,8 @@
 package edu.tumo.banking.controller;
 
-
 import edu.tumo.banking.domain.bank.model.BankModel;
 import edu.tumo.banking.service.bank.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/banks")
-
 public class BankController {
 
     private final BankService bankService;
@@ -26,51 +22,54 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @PostMapping("/addbanks")
-    public ResponseEntity<BankModel> addBank(@RequestBody BankModel newBank) {
-        return new ResponseEntity<>(bankService.add(newBank), HttpStatus.CREATED);
-    }
-
-
-    @PostMapping("/{id}/addimage")
-    public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
-        BankModel bankModel = bankService.addImage(id, image);
-        model.addAttribute("bank",bankModel);
-
+    @PostMapping("/addBanks")
+    public String addBank(@RequestBody BankModel newBank,Model model) {
+        BankModel bank=bankService.add(newBank);
+        model.addAttribute("bank",bank);
         return "bankChanges";
     }
 
-    @GetMapping
-    public ResponseEntity<List<BankModel>> findBanks() {
+
+    @PostMapping("/{id}/addBankImage")
+    public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
+        BankModel bank = bankService.addImage(id, image);
+        model.addAttribute("bank",bank);
+        return "bankChanges";
+    }
+
+    @GetMapping("/allBanks")
+    public String findBanks(Model model) {
         List<BankModel> bank = bankService.findAll();
-        return new ResponseEntity<>(bank, HttpStatus.OK);
+        model.addAttribute("bank",bank);
+        return "banks";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BankModel> findBankById(@PathVariable Long id) {
-        return new ResponseEntity<>(bankService.findById(id), HttpStatus.OK);
+    public String findBankById(@PathVariable Long id,Model model) {
+        BankModel bank= bankService.findById(id);
+        model.addAttribute("bank",bank);
+        return "employees";
     }
 
-//    @GetMapping("/{id}/image")
-//    public ResponseEntity<byte[]> getImage(@PathVariable Long id){
-//        return new ResponseEntity<>(bankService.getImage(id), HttpStatus.OK);
-//    }
-
-    @PutMapping
-    public ResponseEntity<BankModel> updateBank(@RequestBody BankModel updatedBank) {
-        return new ResponseEntity<>(bankService.update(updatedBank), HttpStatus.OK);
+    @PutMapping("/updateBanks")
+    public String updateBank(@RequestBody BankModel updatedBank,Model model) {
+        BankModel bank= bankService.update(updatedBank);
+        model.addAttribute("bank",bank);
+        return "bankChanges";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBankById(@PathVariable Long id) {
+    @DeleteMapping("/{id}/deleteBank")
+    public String deleteBankById(@PathVariable Long id,Model model) {
         bankService.deleteBankModelById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        model.addAttribute("bank",null);
+        return "bankChanges";
     }
 
-    @DeleteMapping("/{id}/image")
-    public ResponseEntity<?> deleteImageById(@PathVariable Long id){
+    @DeleteMapping("/{id}/deleteImage")
+    public String deleteImageById(@PathVariable Long id,Model model){
         bankService.deleteImageByBankId(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        model.addAttribute("bank",null);
+        return "bankChanges";
     }
 
 

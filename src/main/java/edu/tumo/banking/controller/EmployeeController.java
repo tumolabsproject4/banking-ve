@@ -1,11 +1,8 @@
 package edu.tumo.banking.controller;
 
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
-import edu.tumo.banking.validation.EmployeeValidation;
 import edu.tumo.banking.service.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,56 +18,64 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService, EmployeeValidation employeeValidation) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/addemployee")
-    public ResponseEntity<EmployeeModel> addEmployee(@RequestBody EmployeeModel employee) {
-        return new ResponseEntity<>(employeeService.add(employee), HttpStatus.CREATED);
+    @PostMapping("/addEmployees")
+    public String addEmployee(@RequestBody EmployeeModel employee,Model model) {
+        EmployeeModel employeeModel = employeeService.add(employee);
+        model.addAttribute("employee",employeeModel);
+        return "employeesChanges";
     }
 
-    @PutMapping("/addimage")
+    @PostMapping ("/addEmployeeImage")
     public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
         EmployeeModel employeeModel = employeeService.addImage(id,image);
         model.addAttribute("employee",employeeModel);
-
-        return "employeeChanges";
+        return "employeesChanges";
     }
 
-    @GetMapping
-    public ResponseEntity<List<EmployeeModel>> findEmployees() {
+    @GetMapping("/allEmployees")
+    public String findEmployees(Model model) {
         List<EmployeeModel> employee = employeeService.findAll();
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        model.addAttribute("employee",employee);
+        return "employees";
     }
 
-    @GetMapping("{staff}")
-    public ResponseEntity<List<EmployeeModel>> findStaff(@PathVariable Long id) {
+    @GetMapping("/staff")
+    public String findStaff(@PathVariable Long id,Model model) {
         List<EmployeeModel> employee = employeeService.findStaffFromBank(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        model.addAttribute("employee",employee);
+        return "employees";
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable Long id) {
-        Optional<EmployeeModel> model = employeeService.findById(id);
-        return new ResponseEntity<>(model.get(), HttpStatus.OK);
+    public String findEmployeeById(@PathVariable Long id,Model model) {
+        Optional<EmployeeModel> employee = employeeService.findById(id);
+        model.addAttribute("employee",employee);
+        return "oneEmployee";
     }
 
-    @PutMapping
-    public ResponseEntity<EmployeeModel> updateEmployee(@RequestBody EmployeeModel updatedEmployee) {
-        return new ResponseEntity<>(employeeService.update(updatedEmployee), HttpStatus.OK);
+    @PutMapping("/updateEmployees")
+    public String updateEmployee(@RequestBody EmployeeModel updatedEmployee, Model model) {
+        EmployeeModel employeeModel=employeeService.update(updatedEmployee);
+        model.addAttribute("employee",employeeModel);
+        return "employeesChanges";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEmployeeById(@PathVariable Long id) {
+    @DeleteMapping("/{id}/deleteEmployee")
+    public String  deleteEmployeeById(@PathVariable Long id, Model model) {
         employeeService.deleteEmployeeById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        model.addAttribute("employee",null);
+        return "employeesChanges";
     }
 
-    @DeleteMapping("/{id}/image")
-    public ResponseEntity<?> deleteImageById(@PathVariable Long id){
+    @DeleteMapping("/{id}/deleteImage")
+    public String deleteImageById(@PathVariable Long id,Model model){
         employeeService.deleteEmployeeById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        model.addAttribute("employee",null);
+        return "employeesChanges";
     }
 }
