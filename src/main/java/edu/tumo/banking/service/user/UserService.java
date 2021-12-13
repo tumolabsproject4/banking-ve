@@ -1,11 +1,14 @@
 package edu.tumo.banking.service.user;
 
 import edu.tumo.banking.domain.user.UserModel;
+import edu.tumo.banking.domain.user.UserRegistrationModel;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
+
+    UserModel register(UserRegistrationModel userRegistrationModel);
 
     UserModel add(UserModel userModel);
 

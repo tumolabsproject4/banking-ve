@@ -9,13 +9,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-@org.springframework.stereotype.Repository
+@Repository
 public class UserRepositoryImpl implements UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -30,12 +31,12 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     @Transactional
     public UserModel add(UserModel userModel) {
-        String sql = "INSERT INTO user('username','user_password') VALUES(?,?)";
+        String sql = "INSERT INTO user(username, user_password) VALUES(?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int inserted = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"user_id"});
             ps.setString(1, userModel.getUsername());
-            ps.setString(1, userModel.getPassword());
+            ps.setString(2, userModel.getPassword());
             return ps;
         }, keyHolder);
         if (inserted == 1) {

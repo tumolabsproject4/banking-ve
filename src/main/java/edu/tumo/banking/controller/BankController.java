@@ -40,7 +40,7 @@ public class BankController {
     @GetMapping("/allBanks")
     public String findBanks(Model model) {
         List<BankModel> bank = bankService.findAll();
-        model.addAttribute("bank",bank);
+        model.addAttribute("banks",bank);
         return "banks";
     }
 

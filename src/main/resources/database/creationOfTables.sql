@@ -1,3 +1,4 @@
+use banking_ve;
 CREATE DATABASE IF NOT EXISTS banking_ve;
 -- use banking_ve
 CREATE TABLE IF NOT EXISTS user

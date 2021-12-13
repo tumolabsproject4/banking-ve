@@ -1,6 +1,7 @@
 package edu.tumo.banking.service.user;
 
 import edu.tumo.banking.domain.user.UserModel;
+import edu.tumo.banking.domain.user.UserRegistrationModel;
 import edu.tumo.banking.exception.AlreadyExistingValueException;
 import edu.tumo.banking.exception.NotFoundValueException;
 import edu.tumo.banking.exception.ResourceNotValidException;
@@ -9,6 +10,7 @@ import edu.tumo.banking.validation.UserValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +23,34 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Transactional
+    @Override
+    public UserModel register(UserRegistrationModel userRegistrationModel) {
+        if (!UserValidation.validateUserRegistrationModel(userRegistrationModel)) {
+            logger.info("User {} is not valid", userRegistrationModel);
+            throw new ResourceNotValidException("User" + userRegistrationModel + "is not valid");
+        }
+        Optional<UserModel> userModelOptional = getByUserName(userRegistrationModel.getUsername());
+        if (userModelOptional.isPresent()) {
+            logger.warn("User with the username {} exists ", userRegistrationModel.getUsername());
+            throw new AlreadyExistingValueException("User with the username" + userRegistrationModel.getUsername() + "exists");
+        }
+        logger.info("User {} is successfully added", userRegistrationModel);
+        UserModel userModel = new UserModel();
+        userModel.setUsername(userRegistrationModel.getUsername());
+        userModel.setPassword(passwordEncoder.encode(userRegistrationModel.getPassword()));
+        return userRepository.add(userModel);
     }
 
     @Override
@@ -100,6 +124,12 @@ public class UserServiceImpl implements UserService {
         }
         logger.info("User {} is deleted", id);
         userRepository.deleteUserById(id);
+    }
+
+    private Optional<UserModel> getByUserName(String userName) {
+        Optional<UserModel> userModelOptional = userRepository.findByUserName(userName);
+        logger.info("User with the username{} exists", userName);
+        return userModelOptional;
     }
 
 

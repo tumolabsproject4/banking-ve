@@ -8,19 +8,17 @@
     <script type="text/javascript" th:src="@{/js/actions.js}"></script>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <style>
-        .register {
+        .register{
             background: -webkit-linear-gradient(left, #3931af, #00c6ff);
             margin-top: 3%;
             padding: 3%;
         }
-
-        .register-left {
+        .register-left{
             text-align: center;
             color: #fff;
             margin-top: 4%;
         }
-
-        .register-left input {
+        .register-left input{
             border: none;
             border-radius: 1.5rem;
             padding: 2%;
@@ -33,51 +31,36 @@
             cursor: pointer;
 
         }
-
-        .register-right {
+        .register-right{
             background: #f8f9fa;
             border-top-left-radius: 10% 50%;
             border-bottom-left-radius: 10% 50%;
         }
-
-        .register-left img {
+        .register-left img{
             margin-top: 15%;
             margin-bottom: 5%;
             width: 25%;
-            -webkit-animation: mover 2s infinite alternate;
-            animation: mover 2s infinite alternate;
+            -webkit-animation: mover 2s infinite  alternate;
+            animation: mover 2s infinite  alternate;
         }
-
         @-webkit-keyframes mover {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-20px);
-            }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
         }
-
         @keyframes mover {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-20px);
-            }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
         }
-
-        .register-left p {
+        .register-left p{
             font-weight: lighter;
             padding: 12%;
             margin-top: -9%;
         }
-
-        .register .register-form {
+        .register .register-form{
             padding: 10%;
             margin-top: 10%;
         }
-
-        .btnRegister {
+        .btnRegister{
             float: right;
             margin-top: 10%;
             border: none;
@@ -91,8 +74,7 @@
             margin-right: 25%;
             margin-bottom: 10%;
         }
-
-        .register .nav-tabs {
+        .register .nav-tabs{
             margin-top: 3%;
             border: none;
             background: #0062cc;
@@ -100,8 +82,7 @@
             width: 28%;
             float: right;
         }
-
-        .register .nav-tabs .nav-link {
+        .register .nav-tabs .nav-link{
             padding: 2%;
             height: 34px;
             font-weight: 600;
@@ -109,31 +90,26 @@
             border-top-right-radius: 1.5rem;
             border-bottom-right-radius: 1.5rem;
         }
-
-        .register .nav-tabs .nav-link:hover {
+        .register .nav-tabs .nav-link:hover{
             border: none;
         }
-
-        .register .nav-tabs .nav-link.active {
+        .register .nav-tabs .nav-link.active{
             width: 100px;
             color: #0062cc;
             border: 2px solid #0062cc;
             border-top-left-radius: 1.5rem;
             border-bottom-left-radius: 1.5rem;
         }
-
-        .register-heading {
+        .register-heading{
             text-align: center;
             margin-top: 8%;
             margin-bottom: -15%;
             color: #495057;
         }
-
-        .form-control {
+        .form-control{
             margin-bottom: 5%;
         }
-
-        .container, .register {
+        .container,.register{
             margin-top: 0;
         }
     </style>
@@ -144,32 +120,31 @@
         <div class="col-md-3 register-left">
             <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
             <h3>Welcome</h3>
-            <p>Back to our system!</p>
+            <p>You can trust Us!</p>
         </div>
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">Log In</h3>
-
-                    <form th:action="@{/login}" method="post">
+                    <h3 class="register-heading">Registration</h3>
+                    <form th:action="@{/users/register}" method="post" th:object="${user}">
                         <div class="row register-form justify-content-center">
                             <div class="col-md-12 text-center">
-                                <p th:if="${loginError}" class="text-danger">Wrong username or password</p>
+                                <p th:if="${usernameExists}" class="text-danger">Username is in use</p>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="username" placeholder="Username"
-                                           value=""/></div>
-                                <input type="password" class="form-control" name="password" placeholder="Password"
-                                       value=""/>
+                                    <input type="text" class="form-control" th:field="*{username}" placeholder="Username" value=""/></div>
+                                <input type="password" class="form-control" th:field="*{password}" placeholder="Password" value=""/>
                             </div>
                         </div>
-                        <input type="submit" class="btnRegister" value="Log In"/>
+                        <input type="submit" class="btnRegister" value="Register"/>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 </div>
 
 </body>
