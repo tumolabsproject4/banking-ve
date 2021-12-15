@@ -92,7 +92,7 @@ public class BankRepositoryImpl implements BankRepository {
     @Override
     @Transactional
     public Optional<BankModel> update(BankModel bank) {
-        String sql = "UPDATE bank SET bank_name=?, adress=? WHERE bank_id=?";
+        String sql = "UPDATE bank SET bank_name=?, address=? WHERE bank_id=?";
         int update = jdbcTemplate.update(sql, bank.getBankName(), bank.getAddress(), bank.getBankID());
         if (update == 1) {
             return findById(bank.getBankID());

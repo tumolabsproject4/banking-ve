@@ -1,33 +1,84 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Banking of Future</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script type="text/javascript" th:src="@{/js/actions.js}"></script>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .project-parag {
+            position: absolute;
+            top: 12%;
+            left: 28%;
+            color: white;
+            transform: translate(-50%, -50%);
+            font-size: 65px;
+            font-weight: bold;
+            font-family: cursive;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 721px;
+        }
+
+        .login {
+            margin-bottom: 0;
+            position: absolute;
+            top: 12%;
+            left: 92%;
+            color: red;
+            transform: translate(-50%, -50%);
+
+        }
+
+        .a-parag {
+            font-size: 18px;
+            color: black;
+            text-decoration: none;
+            background: orange;
+            padding: 12px;
+            border: 1px solid orange;
+        }
+
+        .a-parag:hover {
+            color: white;
+        }
+
+        .Sign-Up {
+            position: absolute;
+            top: 30%;
+            left: 24%;
+            transform: translate(-50%, -50%);
+        }
+
+        .welcome-p {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            font-family: cursive;
+        }
+
+    </style>
 </head>
 <body>
 <div class="my-body">
-    <div class="site-title">
-        <div class="logo-container">
-            <img class="logo-image" src="" th:src="@{/images/logo.jpg}" alt="image not found">
-        </div>
-        <div class="header-project">
-            <p class="project-parag">Welcome to Banks Of Future</p>
-        </div>
+    <img class="background-image" th:src="@{/images/firstpagepossible.jpg}" alt="image not found">
+    <div class="header-project">
+        <p class="project-parag">Banks Of Tomorrow</p>
     </div>
     <div class="huge">
-        <div class="big-container">
-            <img src="" th:src="@{/images/banking.jpg}" alt="image not found">
-        </div>
         <div class="login">
-            <p class="text-to-login">Click to
-                <a th:href="@{/register}" class="a-parag"> Signup</a> or
-                <a th:href="@{/login}" class="a-parag">Sign In</a>
-            </p>
+            <a class="a-parag" th:href="@{/login}">Sign In</a>
         </div>
+    </div>
+    <div class="Sign-Up">
+        <p class="welcome-p">
+            Welcome to the virtual environment of banks
+        </p>
+        <a class="a-parag" th:href="@{/register}">Sign Up</a>
     </div>
 </div>
 </body>

@@ -48,10 +48,10 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="" method="post">
+                            <form th:action="@{/banks/{id}/updateBanks(id=${bank.bankID})}" method="post">
                                 <div class="modal-body">
-                                    <input type="text" placeholder="Bank Name">
-                                    <input type="text" placeholder="Bank Address">
+                                    <input type="text" name="bankName" placeholder="Bank Name" th:value="${bank.bankName}">
+                                    <input type="text" name="address" placeholder="Bank Address" th:value="${bank.address}">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
