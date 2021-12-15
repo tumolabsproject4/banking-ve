@@ -1,7 +1,6 @@
 package edu.tumo.banking.service.employee;
 
 
-import com.google.gson.Gson;
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
 import edu.tumo.banking.exception.NotFoundValueException;
 import edu.tumo.banking.exception.ResourceNotValidException;
@@ -25,7 +24,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
-    Gson gson = new Gson();
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
@@ -35,12 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeModel add(EmployeeModel employeeModel) {
-        String json = gson.toJson(employeeModel);
+
         if (!EmployeeValidation.validateEmployeeModel(employeeModel)) {
-            logger.info("Employee{} is not valid", json);
+            logger.info("Employee with the id {} is not valid", employeeModel.getEmployeeId());
             throw new ResourceNotValidException("Employee is not valid");
         }
-        logger.info("Employee{} is successfully added", json);
+        logger.info("Employee with the id {} is successfully added", employeeModel.getEmployeeId());
         return employeeRepository.add(employeeModel);
     }
 
@@ -82,9 +80,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeModel update(EmployeeModel employeeModel) {
-        String json = gson.toJson(employeeModel);
         if (!EmployeeValidation.validateEmployeeModel(employeeModel)) {
-            logger.info("Employee {} is not valid", json);
+            logger.info("Employee with id {} is not valid", employeeModel.getEmployeeId() );
             throw new ResourceNotValidException("Employee with id " + employeeModel.getEmployeeId() + "is not valid");
         }
         Optional<EmployeeModel> employee = employeeRepository.findById(employeeModel.getEmployeeId());
@@ -93,7 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new NotFoundValueException("Employee with the following id " + employeeModel.getEmployeeId() + "is not found");
 
         }
-        logger.info("Employee{} is updated", json);
+        logger.info("Employee with id {} is updated", employeeModel.getEmployeeId());
 
         return employeeRepository.update(employeeModel).get();
     }

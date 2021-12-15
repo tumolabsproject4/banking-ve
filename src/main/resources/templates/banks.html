@@ -24,7 +24,7 @@
     <!--    Erb foreach fras stexov kfras amen angam card sarqeluc stexov piti sarqvi vor frontend-i gracs lofic-y ashxati  -->
     <div class="small d-flex">
         <div class="card" style="width: 18rem;" th:each="bank: ${banks}">
-            <img src="" th:src="@{/images/logo.jpg}" class="card-img-top" alt="...">
+            <img src="" th:src="@{/banks/{id}/image(id=${bank.bankID})}" class="card-img-top" alt="...">
             <div class="card-body">
                 <p class="bank-name"><strong>Bank name:</strong> <a th:href="@{/banks/{id}(id=${bank.bankID})}"
                                                                     th:text="${bank.bankName}"></a>

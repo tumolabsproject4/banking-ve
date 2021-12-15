@@ -80,12 +80,7 @@ public class BankModel {
 
     @Override
     public String toString() {
-        return "BankModel{" +
-                "bankID=" + bankID +
-                ", bankName='" + bankName + '\'' +
-                ", address='" + address + '\'' +
-                ", image=" + Arrays.toString(image) +
-                '}';
+        return "BankModel{bankID=" + bankID + ", bankName='" + bankName + '\'' + ", address='" + address + '\'' + ", image=" + Arrays.toString(image) + '}';
     }
 }
 

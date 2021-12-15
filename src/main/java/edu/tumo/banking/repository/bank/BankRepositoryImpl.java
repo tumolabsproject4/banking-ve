@@ -50,6 +50,15 @@ public class BankRepositoryImpl implements BankRepository {
     }
 
     @Override
+    public byte[] getImage(Long bankId) {
+        Optional<BankModel> optionalBankModel = findById(bankId);
+        if (optionalBankModel.isEmpty()) {
+            // exception
+        }
+        return optionalBankModel.get().getImage();
+    }
+
+    @Override
     @Transactional
     public BankModel addImage(Long id, MultipartFile image) {
         Optional<BankModel> bank = findById(id);

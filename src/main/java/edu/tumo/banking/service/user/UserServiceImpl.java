@@ -1,6 +1,5 @@
 package edu.tumo.banking.service.user;
 
-import com.google.gson.Gson;
 import edu.tumo.banking.domain.user.UserModel;
 import edu.tumo.banking.domain.user.UserRegistrationModel;
 import edu.tumo.banking.exception.AlreadyExistingValueException;
@@ -28,7 +27,6 @@ public class UserServiceImpl implements UserService {
 
     private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    Gson gson = new Gson();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
@@ -42,9 +40,8 @@ public class UserServiceImpl implements UserService {
     public UserModel register(UserRegistrationModel userRegistrationModel) {
 
         if (!UserValidation.validateUserRegistrationModel(userRegistrationModel)) {
-            String json = gson.toJson(userRegistrationModel);
-            logger.info("User {} is not valid", json);
-            throw new ResourceNotValidException("User" + json + "is not valid");
+            logger.info("User {} is not valid", userRegistrationModel);
+            throw new ResourceNotValidException("User" + userRegistrationModel + "is not valid");
         }
         Optional<UserModel> userModelOptional = getByUserName(userRegistrationModel.getUsername());
         if (userModelOptional.isPresent()) {
@@ -62,11 +59,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserModel add(UserModel userModel) {
 
-        String json = gson.toJson(userModel);
         if (!UserValidation.validateUserModel(userModel)) {
 
-            logger.info("User {} is not valid", json);
-            throw new ResourceNotValidException("User" + json + "is not valid");
+            logger.info("User with username {} is not valid", userModel.getUsername());
+            throw new ResourceNotValidException("User with username " + userModel.getUsername() + "is not valid");
         }
         UserModel user = findByUserName(userModel.getUsername()).orElse(null);
         if (user != null) {
@@ -74,7 +70,7 @@ public class UserServiceImpl implements UserService {
             throw new AlreadyExistingValueException("User with the username" + userModel.getUsername() + "exists");
         }
 
-        logger.info("User {} is successfully added", json);
+        logger.info("User with username {} is successfully added", userModel.getUsername());
         return userRepository.add(userModel);
 
     }
@@ -109,14 +105,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Optional<UserModel> update(UserModel userModel) {
-        String json = gson.toJson(userModel);
         if (!UserValidation.validateUserModel(userModel)) {
-            logger.info("User{} is not valid", json);
-            throw new ResourceNotValidException("User" + json + "is not valid");
+            logger.info("User with id {} is not valid", userModel.getUserId());
+            throw new ResourceNotValidException("User with id " + userModel.getUserId() + "is not valid");
         }
         Optional<UserModel> user = userRepository.findById(userModel.getUserId());
         if (user.isEmpty()) {
-            logger.warn("User with the following id {} is not found", userModel.getUserId());
+            logger.info("User with the following id {} is not found", userModel.getUserId());
             throw new NotFoundValueException("User with the following id" + userModel.getUserId() + "is not found");
         }
         logger.info("User{} is updated", userModel);

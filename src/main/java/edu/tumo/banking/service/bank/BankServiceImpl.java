@@ -1,6 +1,5 @@
 package edu.tumo.banking.service.bank;
 
-import com.google.gson.Gson;
 import edu.tumo.banking.domain.bank.model.BankModel;
 import edu.tumo.banking.exception.NotFoundValueException;
 import edu.tumo.banking.exception.ResourceNotFoundException;
@@ -26,7 +25,6 @@ public class BankServiceImpl implements BankService {
 
     private final Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
 
-    Gson gson = new Gson();
 
     @Autowired
     public BankServiceImpl(BankRepository bankRepository) {
@@ -39,12 +37,16 @@ public class BankServiceImpl implements BankService {
     public BankModel add(BankModel bankModel) {
         if (!BankValidation.validateBankModel(bankModel)) {
 
-            String json = gson.toJson(bankModel);
-            logger.info("The bank {} is not valid", json);
+            logger.info("The bank name - {}, id - {} is not valid", bankModel.getBankName(), bankModel.getBankID());
             throw new ResourceNotValidException("The bank is not valid");
         }
-        logger.info("The bank {} is successfully added", bankModel);
+        logger.info("The bank with id {} is successfully added", bankModel.getBankID());
         return bankRepository.add(bankModel);
+    }
+
+    @Override
+    public byte[] getImage(Long bankId) {
+        return bankRepository.getImage(bankId);
     }
 
     @Override
@@ -80,9 +82,8 @@ public class BankServiceImpl implements BankService {
     @Override
     @Transactional
     public BankModel update(BankModel bank) {
-        String json = gson.toJson(bank);
         if (!BankValidation.validateBankModel(bank)) {
-            logger.info("The bank {} is not valid", json);
+            logger.info("The bank with id {} is not valid", bank.getBankID());
             throw new ResourceNotValidException("The bank with id " + bank.getBankID() + "is not valid");
         }
         Optional<BankModel> bankModel = bankRepository.findById(bank.getBankID());
@@ -91,7 +92,7 @@ public class BankServiceImpl implements BankService {
             throw new NotFoundValueException("The bank with the following id " + bank.getBankID() + "is not found");
 
         }
-        logger.info("The bank {} is updated",json);
+        logger.info("The bank with id {} is updated",bank.getBankID());
         return bankRepository.update(bank).get();
 
     }
