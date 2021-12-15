@@ -69,14 +69,14 @@ public class BankController {
     }
 
     @DeleteMapping("/{id}/deleteBank")
-    public String deleteBankById(@PathVariable Long id,Model model) {
+    public String deleteBankById(@PathVariable Long id) {
         bankService.deleteBankModelById(id);
 //        model.addAttribute("bank",null);
         return "banks";
     }
 
     @DeleteMapping("/{id}/deleteImage")
-    public String deleteImageById(@PathVariable Long id,Model model){
+    public String deleteImageById(@PathVariable Long id){
         bankService.deleteImageByBankId(id);
 //        model.addAttribute("bank",null);
         return "banks";

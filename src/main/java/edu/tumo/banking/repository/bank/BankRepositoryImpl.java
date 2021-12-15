@@ -2,8 +2,8 @@ package edu.tumo.banking.repository.bank;
 
 import edu.tumo.banking.domain.bank.model.BankModel;
 import edu.tumo.banking.repository.mappers.BankRowMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.security.Key;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,7 @@ public class BankRepositoryImpl implements BankRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final Logger logger = LogManager.getLogger(BankRepositoryImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(BankRepositoryImpl.class);
 
     @Autowired
     public BankRepositoryImpl(JdbcTemplate jdbcTemplate) {
@@ -109,6 +108,10 @@ public class BankRepositoryImpl implements BankRepository {
         if (status == 1) {
             logger.info("Bank {} was deleted ", id);
         }
+        else{
+            logger.info ("Bank with id {} is not deleted",id);
+            throw new RuntimeException("Bank with id " + id + " is not deleted");
+        }
     }
 
     @Override
@@ -118,6 +121,10 @@ public class BankRepositoryImpl implements BankRepository {
         int status = jdbcTemplate.update(sql, id);
         if (status == 1) {
             logger.info("The image of Bank with id {} was deleted", id);
+        }
+        else{
+            logger.info ("the image of the bank with id {} is not deleted",id);
+            throw new RuntimeException("The image of the bank with id " + id + " is not deleted");
         }
     }
 }

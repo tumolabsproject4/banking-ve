@@ -2,8 +2,9 @@ package edu.tumo.banking.repository.user;
 
 import edu.tumo.banking.domain.user.UserModel;
 import edu.tumo.banking.repository.mappers.UserRowMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     @Override
     @Transactional
