@@ -36,7 +36,6 @@ public class BankServiceImpl implements BankService {
             logger.info("The bank {} is not valid", bankModel);
             throw new ResourceNotValidException("The bank is not valid");
         }
-
         logger.info("The bank is successfully added", bankModel);
         return bankRepository.add(bankModel);
     }

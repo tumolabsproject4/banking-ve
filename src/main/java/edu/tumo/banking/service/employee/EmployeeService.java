@@ -1,6 +1,5 @@
 package edu.tumo.banking.service.employee;
 
-import edu.tumo.banking.domain.bank.model.BankModel;
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
 import org.springframework.web.multipart.MultipartFile;
 

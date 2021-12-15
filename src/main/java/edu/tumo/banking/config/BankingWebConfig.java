@@ -28,7 +28,8 @@ public class BankingWebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/banks", "/banks/**").authenticated()
-                .antMatchers("/users", "/users/**").authenticated()
+                .antMatchers("/users/register").authenticated()
+                .antMatchers( "/users/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -47,3 +48,5 @@ public class BankingWebConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
+
+

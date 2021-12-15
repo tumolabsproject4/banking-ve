@@ -5,9 +5,6 @@ public class ResourceNotValidException extends RuntimeException {
         super("Resource is not valid");
     }
 
-    public ResourceNotValidException(Throwable e) {
-
-        super("Resource is not valid", e);
-    }
+    public ResourceNotValidException(Throwable e) { super("Resource is not valid", e); }
 
 }

@@ -1,5 +1,5 @@
 insert into user
-values (null, 'login', 'password');
+values (null, 'login', '$2a$10$7L6flv6X.dtMgtEwcz8bBO82IPVn2OaPhlaGuVhW1FjV.lkuDyIry');
 
 insert into bank
 values (null, 'Acba Credit Agricole Bank', '35/1 Arshakunyac Street, Yerevan 0026');

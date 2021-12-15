@@ -1,6 +1,5 @@
 package edu.tumo.banking.repository.user;
 
-
 import edu.tumo.banking.domain.user.UserModel;
 
 import java.util.List;

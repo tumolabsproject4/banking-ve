@@ -33,7 +33,7 @@ public class BankRepositoryImpl implements BankRepository {
     @Override
     @Transactional
     public BankModel add(BankModel bankModel) {
-        String sql = "INSERT INTO bank('bank_name','address') VALUES(?,?)";
+        String sql = "INSERT INTO bank(bank_name,address) VALUES(?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int inserted = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"bank_id"});

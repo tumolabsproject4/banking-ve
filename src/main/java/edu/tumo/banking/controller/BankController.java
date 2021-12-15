@@ -22,6 +22,7 @@ public class BankController {
         this.bankService = bankService;
     }
 
+
     @PostMapping("/addBanks")
     public String addBank(@RequestBody BankModel newBank,Model model) {
         BankModel bank=bankService.add(newBank);
@@ -51,25 +52,25 @@ public class BankController {
         return "employees";
     }
 
-    @PutMapping("/updateBanks")
+    @PostMapping("/updateBanks")
     public String updateBank(@RequestBody BankModel updatedBank,Model model) {
         BankModel bank= bankService.update(updatedBank);
         model.addAttribute("bank",bank);
-        return "bankChanges";
+        return "banks";
     }
 
     @DeleteMapping("/{id}/deleteBank")
     public String deleteBankById(@PathVariable Long id,Model model) {
         bankService.deleteBankModelById(id);
 //        model.addAttribute("bank",null);
-        return "bankChanges";
+        return "banks";
     }
 
     @DeleteMapping("/{id}/deleteImage")
     public String deleteImageById(@PathVariable Long id,Model model){
         bankService.deleteImageByBankId(id);
 //        model.addAttribute("bank",null);
-        return "bankChanges";
+        return "banks";
     }
 
 
