@@ -1,5 +1,6 @@
 package edu.tumo.banking.service.user;
 
+import com.google.gson.Gson;
 import edu.tumo.banking.domain.user.UserModel;
 import edu.tumo.banking.domain.user.UserRegistrationModel;
 import edu.tumo.banking.exception.AlreadyExistingValueException;
@@ -7,8 +8,8 @@ import edu.tumo.banking.exception.NotFoundValueException;
 import edu.tumo.banking.exception.ResourceNotValidException;
 import edu.tumo.banking.repository.user.UserRepository;
 import edu.tumo.banking.validation.UserValidation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    Gson gson = new Gson();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
@@ -37,13 +40,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserModel register(UserRegistrationModel userRegistrationModel) {
+
         if (!UserValidation.validateUserRegistrationModel(userRegistrationModel)) {
-            logger.info("User {} is not valid", userRegistrationModel);
-            throw new ResourceNotValidException("User" + userRegistrationModel + "is not valid");
+            String json = gson.toJson(userRegistrationModel);
+            logger.info("User {} is not valid", json);
+            throw new ResourceNotValidException("User" + json + "is not valid");
         }
         Optional<UserModel> userModelOptional = getByUserName(userRegistrationModel.getUsername());
         if (userModelOptional.isPresent()) {
-            logger.warn("User with the username {} exists ", userRegistrationModel.getUsername());
+            logger.info("User with the username {} exists ", userRegistrationModel.getUsername());
             throw new AlreadyExistingValueException("User with the username" + userRegistrationModel.getUsername() + "exists");
         }
         logger.info("User {} is successfully added", userRegistrationModel);
@@ -57,22 +62,25 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserModel add(UserModel userModel) {
 
+        String json = gson.toJson(userModel);
         if (!UserValidation.validateUserModel(userModel)) {
-            logger.info("User {} is not valid", userModel);
-            throw new ResourceNotValidException("User" + userModel + "is not valid");
+
+            logger.info("User {} is not valid", json);
+            throw new ResourceNotValidException("User" + json + "is not valid");
         }
         UserModel user = findByUserName(userModel.getUsername()).orElse(null);
         if (user != null) {
-            logger.warn("User with the username {} exists ", userModel.getUsername());
+            logger.info("User with the username {} exists ", userModel.getUsername());
             throw new AlreadyExistingValueException("User with the username" + userModel.getUsername() + "exists");
         }
-        logger.info("User {} is successfully added", userModel);
+
+        logger.info("User {} is successfully added", json);
         return userRepository.add(userModel);
+
     }
 
     @Override
     public List<UserModel> findAll() {
-        logger.info("Users are found");
         return userRepository.findAll();
     }
 
@@ -80,7 +88,7 @@ public class UserServiceImpl implements UserService {
     public Optional<UserModel> findById(Long id) {
         Optional<UserModel> userModel = userRepository.findById(id);
         if (userModel.isEmpty()) {
-            logger.warn("User with the following id {} is not found", id);
+            logger.info("User with the following id {} is not found", id);
             throw new NotFoundValueException("User with the following id" + id + "is not found");
         }
         logger.info("User with the following id {} is found", id);
@@ -91,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public Optional<UserModel> findByUserName(String userName) {
         Optional<UserModel> userModel = userRepository.findByUserName(userName);
         if (userModel.isEmpty()) {
-            logger.warn("User with the username {} doesn't exist ", userName);
+            logger.info("User with the username {} doesn't exist ", userName);
             throw new NotFoundValueException("User with the username" + userName + "exists");
         }
         logger.info("User with the username{} exists", userName);
@@ -101,9 +109,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Optional<UserModel> update(UserModel userModel) {
+        String json = gson.toJson(userModel);
         if (!UserValidation.validateUserModel(userModel)) {
-            logger.info("User{} is not valid", userModel);
-            throw new ResourceNotValidException("User" + userModel + "is not valid");
+            logger.info("User{} is not valid", json);
+            throw new ResourceNotValidException("User" + json + "is not valid");
         }
         Optional<UserModel> user = userRepository.findById(userModel.getUserId());
         if (user.isEmpty()) {
@@ -119,11 +128,11 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long id) {
         UserModel user = userRepository.findById(id).orElse(null);
         if (user == null) {
-            logger.warn("User with the following id {} is not found", id);
+            logger.info("User with the following id {} is not found", id);
             throw new NotFoundValueException("User with the following id" + id + "is not found");
         }
-        logger.info("User {} is deleted", id);
         userRepository.deleteUserById(id);
+        logger.info("User {} is deleted", id);
     }
 
     private Optional<UserModel> getByUserName(String userName) {

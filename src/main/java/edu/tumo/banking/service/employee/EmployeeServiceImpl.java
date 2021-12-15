@@ -1,13 +1,14 @@
 package edu.tumo.banking.service.employee;
 
 
+import com.google.gson.Gson;
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
 import edu.tumo.banking.exception.NotFoundValueException;
 import edu.tumo.banking.exception.ResourceNotValidException;
 import edu.tumo.banking.repository.employee.EmployeeRepository;
 import edu.tumo.banking.validation.EmployeeValidation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    private final Logger logger = LogManager.getLogger(EmployeeServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
+    Gson gson = new Gson();
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
@@ -32,11 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeModel add(EmployeeModel employeeModel) {
+        String json = gson.toJson(employeeModel);
         if (!EmployeeValidation.validateEmployeeModel(employeeModel)) {
-            logger.warn("Employee{} is not valid", employeeModel);
+            logger.info("Employee{} is not valid", json);
             throw new ResourceNotValidException("Employee is not valid");
         }
-        logger.info("Employee{} is successfully added", employeeModel);
+        logger.info("Employee{} is successfully added", json);
         return employeeRepository.add(employeeModel);
     }
 
@@ -45,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeModel addImage(Long id, MultipartFile image) {
         Optional<EmployeeModel> employee = employeeRepository.findById(id);
         if (employee.isEmpty()) {
-            logger.warn("Employee with following id {} is not found", id);
+            logger.info("Employee with following id {} is not found", id);
             throw new NotFoundValueException("Employee with following id" + id + "is not found");
         }
         logger.info("Image{} is added", image);
@@ -54,7 +58,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeModel> findAll() {
-        logger.info("Employees are found");
         return employeeRepository.findAll();
     }
 
@@ -69,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<EmployeeModel> findById(Long id) {
         Optional<EmployeeModel> employee = employeeRepository.findById(id);
         if (employee.isEmpty()) {
-            logger.warn("Employee with the following id {} doesn't exist", id);
+            logger.info("Employee with the following id {} doesn't exist", id);
             throw new ResourceNotValidException("Employee with the following id" + id + "doesn't exist");
         }
 
@@ -79,17 +82,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public EmployeeModel update(EmployeeModel employeeModel) {
+        String json = gson.toJson(employeeModel);
         if (!EmployeeValidation.validateEmployeeModel(employeeModel)) {
-            logger.warn("Employee {} is not valid", employeeModel);
+            logger.info("Employee {} is not valid", json);
             throw new ResourceNotValidException("Employee with id " + employeeModel.getEmployeeId() + "is not valid");
         }
         Optional<EmployeeModel> employee = employeeRepository.findById(employeeModel.getEmployeeId());
         if (employee.isEmpty()) {
-            logger.warn("Employee with the following id {} is not found", employeeModel.getEmployeeId());
+            logger.info("Employee with the following id {} is not found", employeeModel.getEmployeeId());
             throw new NotFoundValueException("Employee with the following id " + employeeModel.getEmployeeId() + "is not found");
 
         }
-        logger.info("Employee{} is updated", employeeModel);
+        logger.info("Employee{} is updated", json);
 
         return employeeRepository.update(employeeModel).get();
     }
@@ -99,11 +103,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployeeById(Long id) {
         EmployeeModel employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
-            logger.warn("Employee{} is not found", id);
+            logger.info("Employee{} is not found", id);
             throw new NotFoundValueException("Employee" + id + "is not found");
         }
-        logger.info("Employee{} is deleted", id);
+
         employeeRepository.deleteEmployeeById(id);
+        logger.info("Employee{} is deleted", id);
 
     }
 
@@ -112,11 +117,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteImageByEmployeeId(Long id) {
         EmployeeModel employee = employeeRepository.findById(id).orElse(null);
         if (employee == null) {
-            logger.warn("Employee {} is not found", id);
+            logger.info("Employee {} is not found", id);
             throw new NotFoundValueException("Bank" + id + "is not found");
         }
-        logger.info("Image of employee{} is deleted", id);
+
         employeeRepository.deleteImageByEmployeeId(id);
+        logger.info("Image of employee{} is deleted", id);
     }
 }
 

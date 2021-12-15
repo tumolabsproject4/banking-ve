@@ -2,8 +2,9 @@ package edu.tumo.banking.repository.employee;
 
 import edu.tumo.banking.domain.employee.model.EmployeeModel;
 import edu.tumo.banking.repository.mappers.EmployeeRowMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +23,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final Logger logger = LogManager.getLogger(EmployeeRepositoryImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(EmployeeRepositoryImpl.class);
 
     @Autowired
     public EmployeeRepositoryImpl(JdbcTemplate jdbcTemplate) {
