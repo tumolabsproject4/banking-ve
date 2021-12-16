@@ -28,14 +28,12 @@ public class BankController {
         this.bankService = bankService;
     }
 
-
-    @PostMapping("/addBanks")
-    public String addBank(@RequestBody BankModel newBank,Model model) {
-        BankModel bank=bankService.add(newBank);
-        model.addAttribute("bank",bank);
-        return "bankChanges";
+    @PostMapping(value = "/addBanks", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String addBank(@RequestParam MultiValueMap<String,String> paramMap,Model model) {
+        BankModel bank = getCreateBankModel(paramMap);
+        bankService.add(bank);
+        return "redirect:/banks/allBanks";
     }
-
 
     @PostMapping("/{id}/addBankImage")
     public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
@@ -95,5 +93,10 @@ public class BankController {
       return new BankModel(bankName, address);
     }
 
+    private BankModel getCreateBankModel(final MultiValueMap<String, String> paramMap) {
+      final var address = paramMap.getFirst("address");
+      final var bankName = paramMap.getFirst("bankName");
+      return new BankModel(bankName, address);
+    }
 
 }
