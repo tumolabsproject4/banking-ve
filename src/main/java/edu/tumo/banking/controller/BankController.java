@@ -76,11 +76,10 @@ public class BankController {
         return "redirect:/banks/allBanks";
     }
 
-    @DeleteMapping("/{id}/deleteBank")
+    @PostMapping("/{id}/deleteBank")
     public String deleteBankById(@PathVariable Long id) {
         bankService.deleteBankModelById(id);
-//        model.addAttribute("bank",null);
-        return "banks";
+        return "redirect:/banks/allBanks";
     }
 
     @DeleteMapping("/{id}/deleteImage")
