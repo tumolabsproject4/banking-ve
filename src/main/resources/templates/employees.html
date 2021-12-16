@@ -1,10 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Banking of Future</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>.big-container{
+        margin-top: 70px;
+        display: flex;
+        justify-content: space-around;
+        width: 1200px;
+        flex-wrap: wrap;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .small {
+        margin-top: 10px;
+        width: 33.3% !important;
+    }
+    .bank-title{
+        text-align: center;
+        margin-top: 1%;
+        font-family: cursive;
+    }
+    .add-button{
+        margin-top: 4%;
+        position: absolute;
+        margin-left: 5%;
+    }
+    .signout{
+        transform: translate(-2%, 265%);
+        display: flex;
+        justify-content: end;
+        margin-right: 5%;
+    }
+    body{
+        height: calc(100vh);
+        background: radial-gradient(black, transparent);
+    }
+    </style>
 </head>
 <body>
+<div class="signout">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn btn-primary" type="submit" value="Sign Out"/>
+    </form>
+</div>
 
+
+
+<!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary add-button" data-toggle="modal" data-target="#create-modal">-->
+<!--    Add New Bank-->
+<!--</button>-->
+
+<!--<div class="modal fade" id="create-modal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" >Add New Employee</h5>-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                    <span aria-hidden="true">&times</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <form th:action="@{/employees/addEmployees}" method="post">-->
+<!--                <div class="modal-body">-->
+<!--                    <input type="text" placeholder="New Bank Name ">-->
+<!--                    <input type="text" placeholder="New Bank Address">-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="create-modal-dissmis">Close</button>-->
+<!--                    <input type="submit" class="btn btn-primary" value="Save changes">-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<h1 class="bank-title">LIST OF EMPLOYEES</h1>
+
+<div class='big-container'>
+
+    <div class="small d-flex">
+        <div class="card" style="width: 18rem;" th:each="employee: ${employees}">
+            <img src="" th:src="@{/images/logo.jpg}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="bank-name"><strong>Employee Firstname:</strong> <a th:href="@{/employees/{id}(id=${employee.employeeId})}"
+                                                                    th:text="${employee.firstName}"></a>
+                </p>
+                <p class="bank-address"><strong>Employee Lastname:</strong> <span th:text="${employee.lastName}"></span></p>
+                <p class="bank-address"><strong>Employee Address:</strong> <span th:text="${employee.address}"></span></p>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Edit
+                </button>
+<!--                <form th:action="@{/banks/{id}/deleteBank(id=${bank.bankID})}" method="post">-->
+<!--                    <button type="submit" class="btn btn-danger">Delete</button>-->
+<!--                </form>-->
+
+                <!-- Modal -->
+<!--                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"-->
+<!--                     aria-labelledby="exampleModalLabel"-->
+<!--                     aria-hidden="true">-->
+<!--                    <div class="modal-dialog" role="document">-->
+<!--                        <div class="modal-content">-->
+<!--                            <div class="modal-header">-->
+<!--                                <h5 class="modal-title" id="exampleModalLabel">Edit Bank</h5>-->
+<!--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                    <span aria-hidden="true">&times;</span>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <form th:action="@{/banks/{id}/updateBanks(id=${bank.bankID})}" method="post">-->
+<!--                                <div class="modal-body">-->
+<!--                                    <input type="text" name="bankName" placeholder="Bank Name" th:value="${bank.bankName}">-->
+<!--                                    <input type="text" name="address" placeholder="Bank Address" th:value="${bank.address}">-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer">-->
+<!--                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                                    <input type="submit" class="btn btn-primary" value="Save changes">-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <!-- Modal -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/actions.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>

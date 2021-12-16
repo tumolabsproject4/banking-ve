@@ -67,8 +67,8 @@
             </div>
             <form th:action="@{/banks/addBanks}" method="post">
                 <div class="modal-body">
-                    <input type="text" placeholder="New Bank Name ">
-                    <input type="text" placeholder="New Bank Address">
+                    <input type="text" name = "bankName" placeholder="New Bank Name">
+                    <input type="text" name = "address" placeholder="New Bank Address">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="create-modal-dissmis">Close</button>
@@ -88,7 +88,7 @@
         <div class="card" style="width: 18rem;" th:each="bank: ${banks}">
             <img src="" th:src="@{/banks/{id}/image(id=${bank.bankID})}" class="card-img-top" alt="...">
             <div class="card-body">
-                <p class="bank-name"><strong>Bank name:</strong> <a th:href="@{/banks/{id}(id=${bank.bankID})}"
+                <p class="bank-name"><strong>Bank name:</strong> <a th:href="@{/employees/{id}/staff(id=${bank.bankID})}"
                                                                     th:text="${bank.bankName}"></a>
                 </p>
                 <p class="bank-address"><strong>Address:</strong> <span th:text="${bank.address}"></span></p>

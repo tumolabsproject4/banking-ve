@@ -62,7 +62,7 @@ public class BankController {
     public String findBankById(@PathVariable Long id,Model model) {
         BankModel bank= bankService.findById(id);
         model.addAttribute("bank",bank);
-        return "employees";
+        return "/employees";
     }
 
     @PostMapping(value = "/{id}/updateBanks", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
