@@ -44,10 +44,10 @@ public class BankServiceImpl implements BankService {
         return bankRepository.add(bankModel);
     }
 
-    @Override
-    public byte[] getImage(Long bankId) {
-        return bankRepository.getImage(bankId);
-    }
+//    @Override
+//    public byte[] getImage(Long bankId) {
+//        return bankRepository.getImage(bankId);
+//    }
 
     @Override
     @Transactional

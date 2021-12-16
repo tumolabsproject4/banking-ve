@@ -51,14 +51,14 @@ public class BankController {
         return "banks";
     }
 
-    @ResponseBody
-    @GetMapping(value = "/{id}/image", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<InputStream> getImage(@PathVariable Long id) {
-        byte[] image = bankService.getImage(id);
-        return ResponseEntity.ok()
-                .contentLength(image.length)
-                .body(new ByteArrayInputStream(image));
-    }
+//    @ResponseBody
+//    @GetMapping(value = "/{id}/image", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+//    public ResponseEntity<InputStream> getImage(@PathVariable Long id) {
+//        byte[] image = bankService.getImage(id);
+//        return ResponseEntity.ok()
+//                .contentLength(image.length)
+//                .body(new ByteArrayInputStream(image));
+//    }
 
     @GetMapping("/{id}")
     public String findBankById(@PathVariable Long id,Model model) {

@@ -6,6 +6,40 @@
     <title>Banking of Future</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>.big-container{
+        margin-top: 70px;
+        display: flex;
+        justify-content: space-around;
+        width: 1200px;
+        flex-wrap: wrap;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .small {
+        margin-top: 10px;
+        width: 33.3% !important;
+    }
+    .bank-title{
+        text-align: center;
+        margin-top: 1%;
+        font-family: cursive;
+    }
+    .add-button{
+        margin-top: 4%;
+        position: absolute;
+        margin-left: 5%;
+    }
+    .signout{
+        transform: translate(-2%, 265%);
+        display: flex;
+        justify-content: end;
+        margin-right: 5%;
+    }
+    body{
+        height: calc(100vh);
+        background: radial-gradient(black, transparent);
+    }
+    </style>
 </head>
 <body>
 <div class="signout">
@@ -21,7 +55,7 @@
 <h1 class="bank-title">LIST OF BANKS</h1>
 
 <div class='big-container'>
-    <!--    Erb foreach fras stexov kfras amen angam card sarqeluc stexov piti sarqvi vor frontend-i gracs lofic-y ashxati  -->
+
     <div class="small d-flex">
         <div class="card" style="width: 18rem;" th:each="bank: ${banks}">
             <img src="" th:src="@{/banks/{id}/image(id=${bank.bankID})}" class="card-img-top" alt="...">
@@ -34,6 +68,10 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Edit
+                </button>
+
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    Delete
                 </button>
 
                 <!-- Modal -->

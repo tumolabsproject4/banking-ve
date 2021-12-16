@@ -48,15 +48,15 @@ public class BankRepositoryImpl implements BankRepository {
         logger.warn("The bank {} is not added ", bankModel);
         return null;
     }
-
-    @Override
-    public byte[] getImage(Long bankId) {
-        Optional<BankModel> optionalBankModel = findById(bankId);
-        if (optionalBankModel.isEmpty()) {
-            // exception
-        }
-        return optionalBankModel.get().getImage();
-    }
+//
+//    @Override
+//    public byte[] getImage(Long bankId) {
+//        Optional<BankModel> optionalBankModel = findById(bankId);
+//        if (optionalBankModel.isEmpty()) {
+//            // exception
+//        }
+//        return optionalBankModel.get().getImage();
+//    }
 
     @Override
     @Transactional

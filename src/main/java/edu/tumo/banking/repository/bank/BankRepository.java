@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface BankRepository {
     BankModel add(BankModel bankModel);
 
-    byte[] getImage(Long bankId);
+    //byte[] getImage(Long bankId);
 
     BankModel addImage(Long id, MultipartFile image);
 
