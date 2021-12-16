@@ -26,14 +26,14 @@ public class EmployeeController {
     public String addEmployee(@RequestBody EmployeeModel employee,Model model) {
         EmployeeModel employeeModel = employeeService.add(employee);
         model.addAttribute("employee",employeeModel);
-        return "employeesChanges";
+        return "employees";
     }
 
     @PostMapping ("/addEmployeeImage")
     public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
         EmployeeModel employeeModel = employeeService.addImage(id,image);
         model.addAttribute("employee",employeeModel);
-        return "employeesChanges";
+        return "employees";
     }
 
     @GetMapping("/allEmployees")
@@ -62,20 +62,20 @@ public class EmployeeController {
     public String updateEmployee(@RequestBody EmployeeModel updatedEmployee, Model model) {
         EmployeeModel employeeModel=employeeService.update(updatedEmployee);
         model.addAttribute("employee",employeeModel);
-        return "employeesChanges";
+        return "employees";
     }
 
     @DeleteMapping("/{id}/deleteEmployee")
     public String  deleteEmployeeById(@PathVariable Long id, Model model) {
         employeeService.deleteEmployeeById(id);
         model.addAttribute("employee",null);
-        return "employeesChanges";
+        return "employees";
     }
 
     @DeleteMapping("/{id}/deleteImage")
     public String deleteImageById(@PathVariable Long id,Model model){
         employeeService.deleteEmployeeById(id);
         model.addAttribute("employee",null);
-        return "employeesChanges";
+        return "employees";
     }
 }

@@ -39,7 +39,7 @@ public class BankController {
     public String addImage(@PathVariable Long id, @RequestParam("image") MultipartFile image, Model model) {
         BankModel bank = bankService.addImage(id, image);
         model.addAttribute("bank",bank);
-        return "bankChanges";
+        return "banks";
     }
 
     @GetMapping("/allBanks")
