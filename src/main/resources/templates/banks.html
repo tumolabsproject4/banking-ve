@@ -86,7 +86,7 @@
 
     <div class="small d-flex">
         <div class="card" style="width: 18rem;" th:each="bank: ${banks}">
-            <img src="" th:src="@{/banks/{id}/image(id=${bank.bankID})}" class="card-img-top" alt="...">
+            <img src="" th:src="@{/images/bank.jpg}" class="card-img-top" alt="...">
             <div class="card-body">
                 <p class="bank-name"><strong>Bank name:</strong> <a th:href="@{/employees/{id}/staff(id=${bank.bankID})}"
                                                                     th:text="${bank.bankName}"></a>

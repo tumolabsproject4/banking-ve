@@ -48,12 +48,9 @@
     </form>
 </div>
 
-
-
-<!-- Button trigger modal -->
-<!--<button type="button" class="btn btn-primary add-button" data-toggle="modal" data-target="#create-modal">-->
-<!--    Add New Bank-->
-<!--</button>-->
+<button type="button" class="btn btn-primary add-button" data-toggle="modal" data-target="#create-modal">
+    Add New Bank
+</button>
 
 <!--<div class="modal fade" id="create-modal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
 <!--     aria-hidden="true">-->
@@ -85,24 +82,27 @@
 <div class='big-container'>
 
     <div class="small d-flex">
-        <div class="card" style="width: 18rem;" th:each="employee: ${employees}">
-            <img src="" th:src="@{/images/logo.jpg}" class="card-img-top" alt="...">
+        <div class="card" style="width: 18rem;" th:each="employees: ${employees}">
+            <img src="" th:src="@{/images/employee.jpg}" class="card-img-top" alt="...">
             <div class="card-body">
-                <p class="bank-name"><strong>Employee Firstname:</strong> <a th:href="@{/employees/{id}(id=${employee.employeeId})}"
-                                                                    th:text="${employee.firstName}"></a>
+                <p class="employee-firstname"><strong>Firstname:</strong> <p th:href="@{/employees/{id}(id=${employees.employeeId})}"
+                                                                    th:text="${employees.firstName}"></p>
                 </p>
-                <p class="bank-address"><strong>Employee Lastname:</strong> <span th:text="${employee.lastName}"></span></p>
-                <p class="bank-address"><strong>Employee Address:</strong> <span th:text="${employee.address}"></span></p>
+                <p class="employee-lastname"><strong>Lastname:</strong> <span th:text="${employees.lastName}"></span></p>
+                <p class="employee-age"><strong>Age</strong>:</strong> <span th:text="${employees.age}"></span></p>
+                <p class="employee-salary"><strong>Salary:</strong> <span th:text="${employees.salary}"></span></p>
+                <p class="employee-address"><strong>Address:</strong> <span th:text="${employees.address}"></span></p>
+                <p class="employee-department"><strong>Department:</strong> <span th:text="${employees.department}"></span></p>
 
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Edit
                 </button>
-<!--                <form th:action="@{/banks/{id}/deleteBank(id=${bank.bankID})}" method="post">-->
-<!--                    <button type="submit" class="btn btn-danger">Delete</button>-->
-<!--                </form>-->
+                <form th:action="@{/employees/{id}/deleteEmployee(id=${employees.employeeId})}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
 
-                <!-- Modal -->
+<!--                 Modal -->
 <!--                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"-->
 <!--                     aria-labelledby="exampleModalLabel"-->
 <!--                     aria-hidden="true">-->
@@ -128,7 +128,7 @@
 <!--                    </div>-->
 <!--                </div>-->
 
-                <!-- Modal -->
+<!--                 Modal -->
 
             </div>
         </div>

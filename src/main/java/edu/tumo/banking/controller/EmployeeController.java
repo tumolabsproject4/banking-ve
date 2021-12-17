@@ -24,8 +24,6 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-
-
     @PostMapping("/addEmployees")
     public String addEmployee(@RequestBody EmployeeModel employee,Model model) {
         EmployeeModel employeeModel = employeeService.add(employee);
@@ -83,15 +81,23 @@ public class EmployeeController {
         return "employees";
     }
 
-//    private BankModel getUpdateBankModel(final MultiValueMap<String, String> paramMap) {
+//    private EmployeeModel getUpdateEmployeeModel(final MultiValueMap<String,String> paramMap) {
+//        final var firstname=paramMap.getFirst("firstName");
+//        final var lastname=paramMap.getFirst("lastName");
+//        final var age=paramMap.getFirst("age");
+//        final var salary=paramMap.getFirst("salary");
 //        final var address = paramMap.getFirst("address");
-//        final var bankName = paramMap.getFirst("bankName");
-//        return new BankModel(bankName, address);
+//        final var department=paramMap.getFirst("department");
+//        return new EmployeeModel(firstname, lastname, age, salary, address, department);
 //    }
 //
-//    private BankModel getCreateBankModel(final MultiValueMap<String, String> paramMap) {
+//    private EmployeeModel getCreateEmployeeModel(final MultiValueMap<String,String> paramMap) {
+//        final var firstname= paramMap.getFirst("firstName");
+//        final var lastname=paramMap.getFirst("lastName");
+//        final var age=paramMap.getFirst("age");
+//        final var salary=paramMap.getFirst("salary");
 //        final var address = paramMap.getFirst("address");
-//        final var bankName = paramMap.getFirst("bankName");
-//        return new BankModel(bankName, address);
+//        final var department=paramMap.getFirst("department");
+//        return new EmployeeModel(firstname, lastname, age, salary, address, department);
 //    }
 }

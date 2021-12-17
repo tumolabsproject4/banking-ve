@@ -31,6 +31,10 @@ public class EmployeeModel {
         this.image = image;
     }
 
+//    public EmployeeModel(String firstname, String lastname, String age, String salary, String address, String department) {
+//
+//    }
+
     public Long getEmployeeId() {
         return employeeId;
     }
