@@ -5,5 +5,7 @@ insert into bank(bank_name, address)
 values ('Acba Credit Agricole Bank', '35/1 Arshakunyac Street, Yerevan 0026');
 
 insert into employee
-values (null, 'Laura', 'Baldryan', '21', 223000.0, 'Smbat Zoravar 48/1', 'IT', true, 2,null),
-       (null, 'Yekaterina', 'Avagimyan', '21', 255000.0, 'Komitas 49', 'IT', true, 2,null);
+values (null, 'Vahan', 'Baldryan', '30', 320000.0, 'Proshyan 6', 'Marketing', true, 3,null),
+       (null, 'Mariam', 'Mkhitaryan', '23', 255000.0, 'Baghramyan 8', 'Finances', true, 3,null),
+       (null, 'Lusine', 'Melikyan', '44', 180000.0, 'Paruyr Sevak 106', 'HR', true, 4,null),
+       (null, 'Lilya', 'Avetisyan', '23', 543000.0, 'Hanrapetutyan 8','PM', true, 4,null);
